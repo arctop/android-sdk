@@ -4,14 +4,10 @@ The Neuos SDK public repository contains everything you need to connect your app
 
 # Installation
 
-There are two ways to add this SDK:
+To add the SDK:
 
-1. Clone the repository locally, and add it as a module into your Android project.
-2. Add the maven dependency to you project's build.gradle
+- Clone the repository locally, and add it as a module into your Android project.
 
-        dependencies {
-            implementation 'io.neuos:neuosSDK:0.1'
-        }
 
 # Package structure
 
