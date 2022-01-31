@@ -68,6 +68,25 @@ public final class NeuosSDK {
     }
 
     /**
+     * Names of predictions available
+     * Use these when calling {@link INeuosSdk#startPredictionSession(String)}
+     */
+    public static final class Predictions {
+        public static final String ZONE = "zone";
+    }
+
+    /**
+     * Names of prediction values available via {@link INeuosSdkListener#onValueChanged(String, float)}
+     */
+    public static final class PredictionValues{
+        public static final String ZONE_STATE = "zone_state";
+        public static final String FOCUS_STATE = "focus";
+        public static final String ENJOYMENT_STATE = "enjoyment";
+        public static final String HEART_RATE = "heart_rate";
+        public static final String AVG_MOTION = "avg_motion";
+    }
+    
+    /**
      * Constants used for pairing activity
      * */
     public static final String IO_NEUOS_DEVICE_PAIRING_ACTION = "io.neuos.device_connect";

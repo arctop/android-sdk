@@ -15,7 +15,7 @@ oneway interface INeuosSdkListener {
     void onConnectionChanged(in int previousConnection ,in int currentConnection);
     /**
     * Reports a value changed during prediciton.
-    * @param key the value's key name (e.g. flow)
+    * @param key the value's key name {@link NeuosSDK#PredictionValues}
     * @param value the current value
     */
     void onValueChanged(in String key,in float value);
