@@ -36,9 +36,10 @@ The SDK contains the following components:
 1. [Verify that a user is logged in](#verify-a-user-is-logged-in)
 2. [Verify that a user has been calibrated for Neuos](#verify-a-user-is-calibrated-for-neuos)
 3. [Connect to a Neuos sensor device](#connect-to-a-neuos-sensor-device)
-4. [Begin a session](#begin-a-session)
-5. [Work with session data](#work-with-session-data)
-6. [Finish session](#finish-session)
+4. [Verify Signal Quality of device](#verify-signal-quality-of-device)
+5. [Begin a session](#begin-a-session)
+6. [Work with session data](#work-with-session-data)
+7. [Finish session](#finish-session)
 
 ## Cleanup
 
@@ -226,6 +227,26 @@ The call to **connectSensorDevice(String macAddress)** will initiate a series of
 
 The values for *previousConnection* and *currentConnection* are defined in the NeuosSDK.java class.
 Once the value of *currentConnection* == NeuosSDK.ConnectionState.CONNECTED , you may begin a session. 
+
+#### Verify Signal Quality of device
+
+Once the device is connected you should verify that the user it is receiving proper signal. 
+The easiest way is to launch the QA activity bundled along with the app. This frees you from implementing your own version, and provides constants that are verified before the activity returns its result.
+
+Create an intent to launch the screen:
+
+    Intent activityIntent = new Intent("io.neuos.QAScreen");
+    
+Add extras into the intent to denote you want it to be stand alone
+    
+    activityIntent.putExtra(NeuosQAProperties.STAND_ALONE , true);
+    
+Add properties for the screen to verify
+
+    activityIntent.putExtra(NeuosQAProperties.TASK_PROPERTIES ,
+                new NeuosQAProperties(NeuosQAProperties.Quality.Good , NeuosQAProperties.INFINITE_TIMEOUT));
+                
+The activity will call finish() with either RESULT_OK or RESULT_CANCELED, which you can use to determine your next steps.
 
 #### Begin a session
 
