@@ -24,4 +24,10 @@ oneway interface INeuosQAListener {
     * Reports battery charge left value in increments of 5%
     */
     void onBatteryStatus(float chargeLeft);
+    /**
+    * Reports device's plugged in state changes
+    * Having a device plugged in causes noise and reduces signal quality
+    */
+    void onDevicePluggedInStatusChange(in boolean pluggedIn);
+
 }
