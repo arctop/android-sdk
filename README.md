@@ -18,7 +18,8 @@ The SDK contains the following components:
 - A set of AIDL files, which define the interface of communication with the service.
     - *INeuosSdk.aidl* provides the public service API accessible by your app.
     - *INeuosSdkListener.aidl* defines the callback interface by which the service provides responses and notifications back to your app.
-    - *INeuosQAListener.aidl* defines a callback interface that provides QA values from the sensor device to your app. 
+    - *INeuosQAListener.aidl* defines a callback interface that provides QA values from the sensor device to your app.
+    - *INeuosSessionUploadListener.aidl* defines a callback interface that provides session upload monitoring.      
 
 # Workflow
 
@@ -259,6 +260,7 @@ At this point, your app will receive results via the **onValueChanged(String key
 #### Finish session
 
 When you are ready to complete the session, call **finishSession()**. The session will close and notify your app when done via **onSessionComplete()** callback.
+You can use the **INeuosSessionUploadListener** interface to monitor the progress of uploading the session to the Neuos server. (Optional)
 
 ### Cleanup
 
