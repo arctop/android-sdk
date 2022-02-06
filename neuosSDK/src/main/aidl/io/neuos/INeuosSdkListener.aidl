@@ -40,7 +40,6 @@ oneway interface INeuosSdkListener {
     * Notifies client that an experiment session has begun
     */
     void onExperimentSessionStart();
-    //TODO: This should actually report completion state
     /**
     * Notifies client that a running session has completed
     */

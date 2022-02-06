@@ -2,9 +2,17 @@
 package io.neuos;
 import io.neuos.INeuosSdkListener;
 import io.neuos.INeuosQAListener;
+import io.neuos.INeuosSessionUploadListener;
 
-// TODO: Think about versioning
 interface INeuosSdk {
+
+    /**
+    * Begins calibration session.
+    * This is an INTERNAL CALL
+    * Users of SDK NEVER need to call this function.
+    */
+    oneway void startCalibrationSession(in String sessionId);
+
     /**
     * Initializes the SDK for usage
     * Once initialized, {@link INeuosSdkListener#onInitialized()} is called
@@ -88,9 +96,15 @@ interface INeuosSdk {
     * @param listener INeuosQAListener implementation
     */
     void unregisterQACallback(in INeuosQAListener listener);
-
-
-    // TODO this is really just internal
-    oneway void startCalibrationSession(in String sessionId);
+    /**
+    * Registers for Upload callbacks
+    * @param listener INeuosQAListener implementation
+    */
+    void registerUploadCallback(INeuosSessionUploadListener listener);
+    /**
+    * Unregisters for Upload callbacks
+    * @param listener INeuosQAListener implementation
+    */
+    void unregisterUploadCallback(INeuosSessionUploadListener listener);
 
 }

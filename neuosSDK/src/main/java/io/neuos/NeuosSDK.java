@@ -85,6 +85,17 @@ public final class NeuosSDK {
         public static final String HEART_RATE = "heart_rate";
         public static final String AVG_MOTION = "avg_motion";
     }
+
+    /**
+     * Values for session upload status messages
+     * */
+    public static final class UploadStatus {
+        public static final int STARTING = 1;
+        public static final int COMPRESSING = 2;
+        public static final int UPLOADING = 3;
+        public static final int SUCCESS = 4;
+        public static final int FAILED = 5;
+    }
     
     /**
      * Constants used for pairing activity
