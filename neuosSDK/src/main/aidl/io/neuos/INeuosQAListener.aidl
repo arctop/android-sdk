@@ -29,5 +29,11 @@ oneway interface INeuosQAListener {
     * Having a device plugged in causes noise and reduces signal quality
     */
     void onDevicePluggedInStatusChange(in boolean pluggedIn);
-
+    /**
+    * Reports headband connection status changes.
+    * See {@link NeuosSDK#ConnectionState} for valid values
+    * @param previousConnection the previous connection status
+    * @param currentConnection the current connection status
+    */
+    void onConnectionChanged(in int previousConnection ,in int currentConnection);
 }
