@@ -57,7 +57,7 @@ In order to perform the bind, you will need to declare that your application wil
 This is done by adding this snippet into your *AndroidManifest.XML*
 
     <queries>
-        <package android:name="io.neuos" />
+        <package android:name="io.neuos.central" />
     </queries>
 
 [Query element reference in Android developer guide](https://developer.android.com/guide/topics/manifest/queries-element)
