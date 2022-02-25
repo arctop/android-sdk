@@ -21,7 +21,7 @@ The SDK contains the following components:
     - *INeuosSdkListener.aidl* defines the callback interface by which the service provides responses and notifications back to your app.
     - *INeuosQAListener.aidl* defines a callback interface that provides QA values from the sensor device to your app.
     - *INeuosSessionUploadListener.aidl* defines a callback interface that provides session upload monitoring.      
-
+1. 
 # Workflow
 
 > **_NOTE:_**  The SDK is designed to work in a specific flow. 
@@ -29,9 +29,10 @@ The SDK contains the following components:
 
 ## Setup Phase
 
-1. [Bind to service](#binding-to-the-service)
-2. [Register for callbacks](#register-for-callbacks)
-3. [Initialize the SDK with your API key](#initialize-the-sdk-with-your-api-key)
+1. [Neuos Permissions](#permissions)
+2. [Bind to service](#binding-to-the-service)
+3. [Register for callbacks](#register-for-callbacks)
+4. [Initialize the SDK with your API key](#initialize-the-sdk-with-your-api-key)
 
 ## Session Phase
 
@@ -49,6 +50,17 @@ The SDK contains the following components:
 2. [Unbind from the service](#unbind-from-the-service)
 
 ### Setup Phase
+
+#### Permissions
+
+Before binding to Neuos and receiving data, you will need to request permissions from the user.
+In your *AndroidManifest.XML*, declare that you will be using the NEUOS_DATA permission:
+
+    <uses-permission android:name="io.neuos.permission.NEUOS_DATA" />
+
+Then, at runtime, verify that you have that permission, or request it from the user, as per:
+
+[Requesting runtime permissions reference in Android developer guide](https://developer.android.com/training/permissions/requesting)
 
 #### Binding to the service
 

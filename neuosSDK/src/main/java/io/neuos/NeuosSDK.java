@@ -96,6 +96,8 @@ public final class NeuosSDK {
         public static final int SUCCESS = 4;
         public static final int FAILED = 5;
     }
+
+    public static final String NEUOS_PERMISSION = "io.neuos.permission.NEUOS_DATA";
     
     /**
      * Constants used for pairing activity
