@@ -20,21 +20,26 @@ public final class NeuosSDK {
     }
 
     /**
-     * Error Codes.
+     * Response Codes.
      * These arrive via {@link INeuosSdkListener#onError(int, String)}
+     * Or are returned as responses from functions
      **/
-    public static final class ErrorCodes {
-        public static final int NOT_INITIALIZED = 0;
-        public static final int API_KEY_ERROR = 1;
-        public static final int MODEL_DOWNLOAD_ERROR = 2;
-        public static final int SESSION_UPDATE_FAILURE = 3;
-        public static final int SESSION_UPLOAD_FAILURE = 4;
-        public static final int USER_NOT_LOGGED_IN = 5;
-        public static final int CHECK_CALIBRATION_FAILED = 6;
-        public static final int SESSION_CREATE_FAILURE = 7;
-        public static final int SERVER_CONNECTION_ERROR = 8;
-        public static final int MODELS_NOT_AVAILABLE = 9;
-        public static final int PREDICTION_NOT_AVAILABLE = 10;
+
+    public static final class ResponseCodes {
+        public static final int SUCCESS = 0;
+        public static final int NOT_INITIALIZED = 1;
+        public static final int ALREADY_INITIALIZED = 2;
+        public static final int API_KEY_ERROR = 3;
+        public static final int MODEL_DOWNLOAD_ERROR = 4;
+        public static final int SESSION_UPDATE_FAILURE = 5;
+        public static final int SESSION_UPLOAD_FAILURE = 6;
+        public static final int USER_NOT_LOGGED_IN = 7;
+        public static final int CHECK_CALIBRATION_FAILED = 8;
+        public static final int SESSION_CREATE_FAILURE = 9;
+        public static final int SERVER_CONNECTION_ERROR = 10;
+        public static final int MODELS_NOT_AVAILABLE = 11;
+        public static final int PREDICTION_NOT_AVAILABLE = 12;
+        public static final int NOT_ALLOWED = 12;
     }
 
     /**
@@ -97,8 +102,19 @@ public final class NeuosSDK {
         public static final int FAILED = 5;
     }
 
+    /*
+    * Permission name constant
+    * */
     public static final String NEUOS_PERMISSION = "io.neuos.permission.NEUOS_DATA";
-    
+
+    /**
+     * Public activity names that can be launched by a client
+     * */
+    public static final String NEUOS_PAIR_DEVICE = "io.neuos.PairDevice";
+    public static final String NEUOS_LOGIN ="io.neuos.NeuosLogin";
+    public static final String NEUOS_QA_SCREEN = "io.neuos.QAScreen";
+    public static final String NEUOS_CALIBRATION = "io.neuos.NeuosCalibration";
+
     /**
      * Constants used for pairing activity
      * */

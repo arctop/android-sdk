@@ -11,29 +11,23 @@ interface INeuosSdk {
     * This is an INTERNAL CALL
     * Users of SDK NEVER need to call this function.
     */
-    oneway void startCalibrationSession(in String sessionId);
+    int startCalibrationSession(in String sessionId);
 
     /**
     * Initializes the SDK for usage
-    * Once initialized, {@link INeuosSdkListener#onInitialized()} is called
     * @param apiKey the client's api key to validate usage
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
-    oneway void initializeNeuos(in String apiKey);
+    int initializeNeuos(in String apiKey);
     /**
     * Shuts down the sdk and releases resources
-    * Once complete, {@link INeuosSdkListener#onShutDown()} is called
     */
-    oneway void shutdownSdk();
+    void shutdownSdk();
     /**
     * Retrieves the user's login status.
     * @return int value from {@link NeuosSDK#LoginStatus}
     * */
     int getUserLoginStatus();
-    /**
-    * Queries the initialization status of the SDK service
-    * @return true if initialized false otherwise
-    */
-    boolean getIsInitialized();
     /**
     * Requests connection to a sensor device via it's MAC Address
     * connection status is reported back via {@link INeuosSdkListener#onConnectionChanged(int previousConnection ,int currentConnection)}
@@ -48,16 +42,15 @@ interface INeuosSdk {
     /**
     * Checks the current user's calibration status
     * only calibrated users with available models can run predictions
-    * result is reported via {@link INeuosSdkListener#onUserCalibrationStatus(int calibrationStatus)}
-    * valid values are defined in {@link NeuosSDK#UserCalibrationStatus}
+    * @return int value from {@link NeuosSDK#UserCalibrationStatus}
     */
-    oneway void checkUserCalibrationStatus();
+    int checkUserCalibrationStatus();
     /**
     * Begins a prediction session for the desired prediction
-    * calls {@link INeuosSdkListener#onPredictionSessionStart()} once session has begun
     * @param predictionName the prediction component's name / key to run
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
-    oneway void startPredictionSession(in String predictionName);
+    int startPredictionSession(in String predictionName);
     /**
     * Requests a marker to be written into the current session's data files
     * Markers will be written with current timestamp
@@ -70,17 +63,18 @@ interface INeuosSdk {
     * This will close out all the data files and upload them to neuosCloud
     * calls {@link INeuosSdkListener#onSessionComplete()} once the operation completed
     */
-    oneway void finishSession();
+    void finishSession();
     /**
     * Terminates a session in the event that QA has failed.
     * will close out the session data but will prevent uploading to cloud
     */
-    oneway void terminateSessionQaFailed();
+    void terminateSessionQaFailed();
     /**
     * Registers for SDK callbacks
     * @param listener INeuosSdkListener implementation
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
-    void registerSDKCallback(in INeuosSdkListener listener);
+    int registerSDKCallback(in INeuosSdkListener listener);
     /**
     * Unregisters from SDK callbacks
     * @param listener previously registered listener
@@ -89,8 +83,9 @@ interface INeuosSdk {
     /**
     * Registers for QA callbacks
     * @param listener INeuosQAListener implementation
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
-    void registerQACallback(in INeuosQAListener listener);
+    int registerQACallback(in INeuosQAListener listener);
     /**
     * Unregisters for QA callbacks
     * @param listener INeuosQAListener implementation
@@ -99,8 +94,9 @@ interface INeuosSdk {
     /**
     * Registers for Upload callbacks
     * @param listener INeuosQAListener implementation
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
-    void registerUploadCallback(INeuosSessionUploadListener listener);
+    int registerUploadCallback(INeuosSessionUploadListener listener);
     /**
     * Unregisters for Upload callbacks
     * @param listener INeuosQAListener implementation

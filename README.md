@@ -31,8 +31,8 @@ The SDK contains the following components:
 
 1. [Neuos Permissions](#permissions)
 2. [Bind to service](#binding-to-the-service)
-3. [Register for callbacks](#register-for-callbacks)
-4. [Initialize the SDK with your API key](#initialize-the-sdk-with-your-api-key)
+3. [Initialize the SDK with your API key](#initialize-the-sdk-with-your-api-key)
+4. [Register for callbacks](#register-for-callbacks)
 
 ## Session Phase
 
@@ -126,10 +126,15 @@ Your application will also need to create a ServiceConnection class that will ha
             mService = INeuosSdk.Stub.asInterface(service);
             //And start interacting with the service.
             try {
-                // Register for service callbacks
-                mService.registerCallback(mCallback);
                 // Initialize the service API with your API key
-                mService.initializeNeuos(API_KEY);
+                int response = mService.initializeNeuos(API_KEY);
+                if ( response == NeuosSDK.ResponseCodes.SUCCESS){
+                    // Register for service callbacks
+                    response = mService.registerCallback(mCallback);
+                    if ( response == NeuosSDK.ResponseCodes.SUCCESS){
+                        // Service is ready to work with
+                    }
+                }
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage());
             }
@@ -143,11 +148,16 @@ Your application will also need to create a ServiceConnection class that will ha
 
 More information on bound services can be found in the [Android developer guide](https://developer.android.com/guide/components/bound-services)
 
+#### Initialize the SDK with your API key
+
+Once you are ready to start working with the service, you will need to initialize it with your API key by calling **initializeNeuos(API_KEY)** method of the service.
+The service will return a response code letting you know if it successfully initialized or if there is an error.
+
 #### Register for callbacks
 
-Since the service runs in its own process and not the calling application process, most of the calls inside INeuosSdk.aidl are defined as *oneway*. This effectively creates an asynchronous call into the service process which returns immediately. The service reports results via the INeuosSdkListener.aidl interface.
+The service runs in its own process and not the calling application process, so some of the calls inside INeuosSdk.aidl are defined as *oneway*. This effectively creates an asynchronous call into the service process which returns immediately. The service reports results via the INeuosSdkListener.aidl interface.
 
-The **onSdkError(int errorCode, String message)** call is available for reporting errors back to the calling application. As in the example above, best practice is to register the listener(s) after the service is bound and before you initialize it, to make sure that you receive all messages promptly. Unregistering the listener should be performed after your application has received the *onSdkShutDown()* message.
+The **onSdkError(int errorCode, String message)** call is available for reporting errors back to the calling application. 
 
 For more information on the AIDL interface, and calling IPC methods, visit the [Android Developer Guide](https://developer.android.com/guide/components/aidl#Calling).
 
@@ -160,11 +170,6 @@ Implementing the interface is as simple as creating a private class deriving fro
     private final INeuosSdkListener mCallback = new INeuosSdkListener.Stub() {
         // Implement your interface here
     }
-
-#### Initialize the SDK with your API key
-
-Once you are ready to start working with the service, you will need to initialize it with your API key by calling **initializeNeuos(API_KEY)** method of the service. 
-The service will notify you when ready with the **onSdkInitialized()** callback.
 
 ### Session Phase
 
@@ -189,7 +194,7 @@ In case a user is not logged in, launch an intent that will take the user to the
 
 To launch the login page of the Neuos app, start an activity with the following intent:
 
-    Intent activityIntent = new Intent("io.neuos.NeuosLogin");
+    Intent activityIntent = new Intent(NeuosSDK.NEUOS_LOGIN);
 
 The Neuos login activity will report close and report a result once complete.
 You can either listen to that request or check the login status again.
@@ -203,17 +208,16 @@ Call the service to check the status:
     
     mService.checkUserCalibrationStatus();
 
-Result will be returned via the **onUserCalibrationStatus(int calibrationStatus)** callback. 
 In case the user is not calibrated, launch an intent to send the user into the calibration: 
 
-    Intent activityIntent = new Intent("io.neuos.NeuosCalibration");
+    Intent activityIntent = new Intent(NeuosSDK.NEUOS_CALIBRATION);
 
 #### Connect to a Neuos sensor device 
 
 Connecting to a Neuos sensor device, for example a headband, is accomplished by calling **connectSensorDevice(String macAddress)** 
 Available in the SDK is the PairingActivity class, which handles scanning and extracting the device's MAC address using builtin CompanionDeviceManager. You can launch the activity using the following code
     
-    Intent activityIntent = new Intent("io.neuos.PairDevice");
+    Intent activityIntent = new Intent(NeuosSDK.NEUOS_PAIR_DEVICE);
 
 The activity will dispatch a broadcast once the user has selected a device. You will need to create a BroadcastReceiver that will be called with the result.
 
@@ -249,7 +253,7 @@ The easiest way is to launch the QA activity bundled along with the app. This fr
 
 Create an intent to launch the screen:
 
-    Intent activityIntent = new Intent("io.neuos.QAScreen");
+    Intent activityIntent = new Intent(NeuosSDK.NEUOS_QA_SCREEN);
     
 Add extras into the intent to denote you want it to be stand alone
     
@@ -264,11 +268,13 @@ The activity will call finish() with either RESULT_OK or RESULT_CANCELED, which 
 
 #### Begin a session
 
-For a calibrated user, call **startPredictionSession(String predictionName)** to begin running the Neuos real-time prediction service. Once the session is ready, a callback to **onPredictionSessionStart()** will happen.
+For a calibrated user, call **startPredictionSession(String predictionName)** to begin running the Neuos real-time prediction service.
+You can find the predictions in **NeuosSDK.Predictions**
 
 #### Work with session data
 
-At this point, your app will receive results via the **onValueChanged(String key,float value)** callback. Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback.
+At this point, your app will receive results via the **onValueChanged(String key,float value)** callback. 
+Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback.
 
 #### Finish session
 
@@ -280,7 +286,6 @@ You can use the **INeuosSessionUploadListener** interface to monitor the progres
 #### Shutdown the SDK
 
 Call **shutdownSdk()** to have Neuos release all of its resources.
-Neuos will notify your app via the **onSdkShutDown()** callback.
 
 #### Unbind from the service
 

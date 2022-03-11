@@ -27,35 +27,12 @@ oneway interface INeuosSdkListener {
     */
     void onQAStatus(in boolean passed ,in int type);
     /**
-    * Reports result of querying the user's calibration status
-    * See {@link NeuosSDK#UserCalibrationStatus}
-    * @param calibrationStatus current status
-    */
-    void onUserCalibrationStatus(int calibrationStatus);
-    /**
-    * Notifies client that a predictions session has begun
-    */
-    void onPredictionSessionStart();
-    /**
-    * Notifies client that an experiment session has begun
-    */
-    void onExperimentSessionStart();
-    /**
     * Notifies client that a running session has completed
     */
     void onSessionComplete();
     /**
-    * Notifies client that the sdk has successfully been initialized
-    * and is now ready for predctions / experiments
-    */
-    void onInitialized();
-    /**
-    * Notifies client that SDK has finished shutting down
-    */
-    void onShutDown();
-    /**
     * Callback for SDK errors encountered during opertion
-    * see {@link NeuosSDK#ErrorCodes} for valid codes
+    * see {@link NeuosSDK#ResponseCodes} for valid codes
     * @param errorCode the current error code
     * @param message extra data on the error
     */
