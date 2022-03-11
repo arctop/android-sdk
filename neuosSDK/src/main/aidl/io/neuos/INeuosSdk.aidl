@@ -15,13 +15,12 @@ interface INeuosSdk {
 
     /**
     * Initializes the SDK for usage
-    * Once initialized, {@link INeuosSdkListener#onInitialized()} is called
     * @param apiKey the client's api key to validate usage
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
     int initializeNeuos(in String apiKey);
     /**
     * Shuts down the sdk and releases resources
-    * Once complete, {@link INeuosSdkListener#onShutDown()} is called
     */
     void shutdownSdk();
     /**
@@ -29,11 +28,6 @@ interface INeuosSdk {
     * @return int value from {@link NeuosSDK#LoginStatus}
     * */
     int getUserLoginStatus();
-    /**
-    * Queries the initialization status of the SDK service
-    * @return true if initialized false otherwise
-    */
-    boolean getIsInitialized();
     /**
     * Requests connection to a sensor device via it's MAC Address
     * connection status is reported back via {@link INeuosSdkListener#onConnectionChanged(int previousConnection ,int currentConnection)}
@@ -48,14 +42,13 @@ interface INeuosSdk {
     /**
     * Checks the current user's calibration status
     * only calibrated users with available models can run predictions
-    * result is reported via {@link INeuosSdkListener#onUserCalibrationStatus(int calibrationStatus)}
-    * valid values are defined in {@link NeuosSDK#UserCalibrationStatus}
+    * @return int value from {@link NeuosSDK#UserCalibrationStatus}
     */
     int checkUserCalibrationStatus();
     /**
     * Begins a prediction session for the desired prediction
-    * calls {@link INeuosSdkListener#onPredictionSessionStart()} once session has begun
     * @param predictionName the prediction component's name / key to run
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
     int startPredictionSession(in String predictionName);
     /**
@@ -79,6 +72,7 @@ interface INeuosSdk {
     /**
     * Registers for SDK callbacks
     * @param listener INeuosSdkListener implementation
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
     int registerSDKCallback(in INeuosSdkListener listener);
     /**
@@ -89,6 +83,7 @@ interface INeuosSdk {
     /**
     * Registers for QA callbacks
     * @param listener INeuosQAListener implementation
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
     int registerQACallback(in INeuosQAListener listener);
     /**
@@ -99,6 +94,7 @@ interface INeuosSdk {
     /**
     * Registers for Upload callbacks
     * @param listener INeuosQAListener implementation
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
     int registerUploadCallback(INeuosSessionUploadListener listener);
     /**

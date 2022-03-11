@@ -26,17 +26,13 @@ oneway interface INeuosSdkListener {
     * @param type if QA failed, provides the reason for failure
     */
     void onQAStatus(in boolean passed ,in int type);
-
-
     /**
     * Notifies client that a running session has completed
     */
     void onSessionComplete();
-
-
     /**
     * Callback for SDK errors encountered during opertion
-    * see {@link NeuosSDK#ErrorCodes} for valid codes
+    * see {@link NeuosSDK#ResponseCodes} for valid codes
     * @param errorCode the current error code
     * @param message extra data on the error
     */
