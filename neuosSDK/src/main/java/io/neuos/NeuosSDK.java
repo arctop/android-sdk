@@ -26,6 +26,7 @@ public final class NeuosSDK {
      **/
 
     public static final class ResponseCodes {
+        public static final int NOT_ALLOWED = -1;
         public static final int SUCCESS = 0;
         public static final int NOT_INITIALIZED = 1;
         public static final int ALREADY_INITIALIZED = 2;
@@ -39,7 +40,6 @@ public final class NeuosSDK {
         public static final int SERVER_CONNECTION_ERROR = 10;
         public static final int MODELS_NOT_AVAILABLE = 11;
         public static final int PREDICTION_NOT_AVAILABLE = 12;
-        public static final int NOT_ALLOWED = 12;
     }
 
     /**
