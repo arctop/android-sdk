@@ -62,13 +62,17 @@ interface INeuosSdk {
     * Finishes a running prediction session.
     * This will close out all the data files and upload them to neuosCloud
     * calls {@link INeuosSdkListener#onSessionComplete()} once the operation completed
+    * the return code only pertains to the session close functionality, and is used to validate
+    * that your app's call was accepted. You should still listen for the callback to complete.
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
-    void finishSession();
+    int finishSession();
     /**
     * Terminates a session in the event that QA has failed.
     * will close out the session data but will prevent uploading to cloud
+    * @return int value from {@link NeuosSDK#ResponseCodes}
     */
-    void terminateSessionQaFailed();
+    int terminateSessionQaFailed();
     /**
     * Registers for SDK callbacks
     * @param listener INeuosSdkListener implementation
