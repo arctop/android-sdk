@@ -10,7 +10,7 @@ The current version of Neuos provides three unique brain data streams: Focus, En
 
 In short, Neuos brings a new stream of information direct from brain to computer and it can be used to power all sorts of applications/uses.
 
-One way Neuos achieves its high performance analysis is by calibrating itself to each new user. This allows the brain pattern analysis that Neuos performs to be customized and take into account each person's baseline. More information about the calibration is provided in the section #### Verify a user is calibrated for Neuos. Calibration is required only one-time for each user and takes approximately 10 minutes to complete.
+One way Neuos achieves its high performance analysis is by calibrating itself to each new user. This allows the brain pattern analysis that Neuos performs to be customized and take into account each person's baseline. More information about the calibration is provided in the section [Verify a user is calibrated for Neuos](https://github.com/arctop/Neuos-SDK#verify-a-user-is-calibrated-for-neuos). Calibration is required only one-time for each user and takes approximately 10 minutes to complete.
 
 # Installation
 
