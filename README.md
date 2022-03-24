@@ -140,7 +140,7 @@ Your application will also need to create a ServiceConnection class that will ha
                 int response = mService.initializeNeuos(API_KEY);
                 if ( response == NeuosSDK.ResponseCodes.SUCCESS){
                     // Register for service callbacks
-                    response = mService.registerCallback(mCallback);
+                    response = mService.registerSDKCallback(mCallback);
                     if ( response == NeuosSDK.ResponseCodes.SUCCESS){
                         // Service is ready to work with
                     }
