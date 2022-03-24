@@ -302,7 +302,7 @@ For Head Motion the value is given in steps from 1-4 where 1 is static i.e. the 
 
 Values of -1 or NaNs should be ignored as these reflect low confidence periods of analysis. This can occur for any reason, including a momentary lapse in sensor connection or a brain response that is anomalous. Neuos is strict and always prefers to say "I don't know" with a -1 or NaN rather than imply that it knows by giving a value which has a high chance of being inaccurate. If you notice an excess of -1s or NaNs in your data please contact Arctop for support as these values should occur only very limitedly.
 
-Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback. 
+Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback. If QA failed during the analysis window, the **passed** parameter will be false, and the type of failure will be reported in **type**. Valid types aredefined in **QAFailureType** class inside [NeuosSDK.java](neuosSDK/src/main/java/io/neuos/NeuosSDK.java).
 
 #### Finish session
 
