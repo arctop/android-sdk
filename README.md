@@ -270,12 +270,13 @@ Once the value of *currentConnection* == NeuosSDK.ConnectionState.CONNECTED , yo
 
 Once the device is connected you should verify that the user it is receiving proper signal. 
 The easiest way is to launch the QA activity bundled along with the app. This frees you from implementing your own version, and provides constants that are verified before the activity returns its result.
+The screen also verifies that the user isn't actively charging their device, which creates noise in the signal readings. 
 
 Create an intent to launch the screen:
 
     Intent activityIntent = new Intent(NeuosSDK.NEUOS_QA_SCREEN);
     
-Add extras into the intent to denote you want it to be stand alone
+Add extras into the intent to denote you want it to be stand alone (required, or it won't work)
     
     activityIntent.putExtra(NeuosQAProperties.STAND_ALONE , true);
     
@@ -283,6 +284,19 @@ Add properties for the screen to verify
 
     activityIntent.putExtra(NeuosQAProperties.TASK_PROPERTIES ,
                 new NeuosQAProperties(NeuosQAProperties.Quality.Good , NeuosQAProperties.INFINITE_TIMEOUT));
+
+The [NeuosQAProperties](neuosSDK/src/main/java/io/neuos/NeuosQAProperties.kt) class contains further explanation on different settings you can use to define your user's QA experience.
+
+Optionally, you can add a flag to run the screen in debug mode. This is helpful when developing your apps. 
+It provides 2 features that aren't available in a release setting:
+
+1. There will be a "continue" button at the bottom of the screen, allowing you to simulate successful QA.
+2. Once you dismiss the "please unplug your device" dialog, it will not show up again, and you can continue working with the device connected.
+
+Adding the flag is done as follows:
+
+    activityIntent.putExtra(NeuosQAProperties.RUN_IN_DEBUG , true);
+   
                 
 The activity will call finish() with either RESULT_OK or RESULT_CANCELED, which you can use to determine your next steps.
 
