@@ -23,6 +23,7 @@ data class NeuosQAProperties(
     companion object {
         const val TASK_PROPERTIES: String = "properties"
         const val STAND_ALONE:String = "standalone"
+        const val RUN_IN_DEBUG:String = "debug"
         const val INFINITE_TIMEOUT:Float = 0f
     }
 }
