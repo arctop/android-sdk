@@ -15,6 +15,9 @@ object NeuosStreamService {
     object StreamObjectKeys {
         // defines the command that is encapsulated in this JSON
         const val COMMAND = "command"
+        // defines the times stamp in unix ms that the data has arrived from the prediction service
+        // value is a long int
+        const val TIME_STAMP = "timestamp"
         // key for previous connection state ( when COMMAND == CONNECTION)
         const val PREVIOUS = "previous"
         // key for current connection state ( when COMMAND == CONNECTION)
