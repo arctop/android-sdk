@@ -221,8 +221,8 @@ The following code illustrates connecting and reading values using a C# Unity3D 
 
 ## Kotlin Example (Android Client)
 
-This example is shows the usage of android's network discovery API to scan for the Neuos™ server before connecting.
-    
+This example shows a usage of Android's network discovery API to scan for the Neuos server before connecting.
+```kotlin    
     //Main Activity, scans for the service
     class MainActivity : AppCompatActivity() {
         companion object {
@@ -452,5 +452,6 @@ This example is shows the usage of android's network discovery API to scan for t
         working.set(false)
         super.onDestroy()
     }
-}
+```
+
 
