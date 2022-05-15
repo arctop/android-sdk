@@ -224,3 +224,236 @@ The following code illustrates connecting and reading values using a C# Unity3D 
 
 
 ## Kotlin Example (Android Client)
+
+This example is shows the usage of android's network discovery API to scan for the Neuos™ server before connecting.
+    
+    //Main Activity, scans for the service
+    class MainActivity : AppCompatActivity() {
+        companion object {
+            private const val TAG = "Neuos-Service"
+            private const val SERVICE_NAME = "NeuosService"
+            private const val SERVICE_TYPE = "_http._tcp"
+        }
+        lateinit var nsdManager: NsdManager
+        var mService:NsdServiceInfo? = null
+        var found:Boolean = false
+        val ip = mutableStateOf("")
+        val port = mutableStateOf("")
+        val hasService = mutableStateOf(false)
+        
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            nsdManager = (getSystemService(Context.NSD_SERVICE) as NsdManager)
+            setContent {
+            mainScreen()
+            }
+        }
+        // This function launches the connection
+        fun launchStream(){
+            val streamIntent = Intent(this, NeuosStreamActivity::class.java)
+            streamIntent.putExtra(NeuosStreamActivity.IP , ip.value)
+            streamIntent.putExtra(NeuosStreamActivity.PORT , port.value)
+            startActivity(streamIntent)
+        }
+        @Composable
+        fun mainScreen(){
+            Column {
+                Row {
+                    Button(enabled = !hasService.value, onClick = {
+                        nsdManager.discoverServices(
+                        SERVICE_TYPE,
+                        NsdManager.PROTOCOL_DNS_SD,
+                        discoveryListener
+                        )}) 
+                   {
+                        Text("Scan")
+                   }
+                }
+                Row{
+                    Text("IP ${ip.value}" , color = Color.White)
+                    Text("Port ${port.value}" , color = Color.White)
+                }
+                Row{
+                    Button( enabled = hasService.value,
+                    onClick = {
+                        launchStream()
+                    })
+                    {
+                        Text("Connect")
+                    }
+                }
+            }
+        }
+        private val resolveListener = object : NsdManager.ResolveListener {
+            override fun onResolveFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+                // Called when the resolve fails. Use the error code to debug.
+                Log.e(TAG, "Resolve failed: $errorCode")
+            }
+    
+            override fun onServiceResolved(serviceInfo: NsdServiceInfo) {
+                Log.e(TAG, "Resolve Succeeded. $serviceInfo")
+                mService = serviceInfo
+                ip.value = serviceInfo.host.hostAddress
+                port.value = serviceInfo.port.toString()
+                hasService.value = true
+                Log.d(TAG, "Service found ${ip.value}:${port.value}")
+            }
+        }
+        // Instantiate a new DiscoveryListener
+        private val discoveryListener = object : NsdManager.DiscoveryListener {
+
+            // Called as soon as service discovery begins.
+            override fun onDiscoveryStarted(regType: String) {
+                Log.d(TAG, "Service discovery started")
+            }
+    
+            override fun onServiceFound(service: NsdServiceInfo) {
+                // A service was found! Do something with it.
+                Log.d(TAG, "Service discovery success $service")
+                if (service.serviceName.equals(SERVICE_NAME) && !found){
+                    found = true
+                    nsdManager.resolveService(service, resolveListener)
+                        // The name of the service tells the user what they'd be
+                }
+            }
+    
+            override fun onServiceLost(service: NsdServiceInfo) {
+                // When the network service is no longer available.
+                // Internal bookkeeping code goes here.
+                Log.e(TAG, "service lost: $service")
+            }
+    
+            override fun onDiscoveryStopped(serviceType: String) {
+                Log.i(TAG, "Discovery stopped: $serviceType")
+            }
+    
+            override fun onStartDiscoveryFailed(serviceType: String, errorCode: Int) {
+                Log.e(TAG, "Discovery failed: Error code:$errorCode")
+                nsdManager.stopServiceDiscovery(this)
+            }
+    
+            override fun onStopDiscoveryFailed(serviceType: String, errorCode: Int) {
+                Log.e(TAG, "Discovery failed: Error code:$errorCode")
+                nsdManager.stopServiceDiscovery(this)
+            }
+        }
+
+    }
+
+
+    class NeuosStreamActivity : AppCompatActivity() {
+    companion object {
+        const val API_KEY = "your api key"
+        const val IP = "ip"
+        const val PORT = "port"
+        const val TAG = "Neuos-Service"
+        const val COMMAND = "command"
+        const val VALUE = "value"
+        const val AUTH = "auth"
+        const val AUTH_SUCCESS = "auth-success"
+        const val AUTH_FAILED = "auth-failed"
+        const val API_KEY_HEADER = "apiKey"
+        private enum class Status{
+            AUTHENTICATING,
+            AWAITING_RESPONSE,
+            AUTHENTICATED
+        }
+    }
+    private var currentStatus = Status.AUTHENTICATING
+    private val working = AtomicBoolean(true)
+    private var socket: Socket? = null
+    private var dataInputStream: DataInputStream? = null
+    private var dataOutputStream: DataOutputStream? = null
+    private lateinit var ip:String
+    private var port:Int = 0
+    private val runnable = Runnable {
+        try {
+            val ip = InetAddress.getByName(ip)
+            socket = Socket(ip, port)
+            dataInputStream = DataInputStream(socket!!.getInputStream())
+            dataOutputStream = DataOutputStream(socket!!.getOutputStream())
+            while (working.get()) {
+                try {
+                    when (currentStatus){
+                        Status.AUTHENTICATING -> {
+                            // Send initial auth request
+                            val jsonObj = JSONObject()
+                            jsonObj.put(COMMAND , AUTH)
+                            jsonObj.put(API_KEY_HEADER , API_KEY)
+                            dataOutputStream!!.writeUTF(jsonObj.toString())
+                            currentStatus = Status.AWAITING_RESPONSE
+                            Thread.sleep(100L)
+                        }
+                        Status.AWAITING_RESPONSE -> {
+                            if (dataInputStream!!.available() > 0){
+                                val nextCommand = JSONObject(dataInputStream!!.readUTF())
+                                if (nextCommand.has(COMMAND)) {
+                                    when (nextCommand.get(COMMAND)){
+                                        AUTH_SUCCESS -> {
+                                            currentStatus = Status.AUTHENTICATED
+                                        }
+                                        AUTH_FAILED -> {
+                                            // todo
+                                        }
+                                    }
+
+                                }
+                            }
+                            else{
+                                Thread.sleep(100L)
+                            }
+                        }
+                        Status.AUTHENTICATED -> {
+                            // This part reads the messages after we are authenticated
+                            // as this is on android, the readUTF() function performes reading the length
+                            // of the message and all the convertions out of the box
+                            while (dataInputStream!!.available() > 0){
+                                val data = dataInputStream!!.readUTF()
+                                Log.i("NeuosData", "Received: $data")
+                            }
+                            Thread.sleep(1000L)
+                        }
+
+                    }
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    try {
+                        dataInputStream!!.close()
+                        dataOutputStream!!.close()
+                    } catch (ex: IOException) {
+                        ex.printStackTrace()
+                    }
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                    try {
+                        dataInputStream!!.close()
+                        dataOutputStream!!.close()
+                    } catch (ex: IOException) {
+                        ex.printStackTrace()
+                    }
+                }
+            }
+            try {
+                dataInputStream!!.close()
+                dataOutputStream!!.close()
+            } catch (ex: IOException) {
+                ex.printStackTrace()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // get the port and ip off the intent
+        ip = intent.getStringExtra(IP)!!
+        port = intent.getStringExtra(PORT)!!.toInt()
+        Thread(runnable).start()
+    }
+    override fun onDestroy() {
+        working.set(false)
+        super.onDestroy()
+    }
+}
