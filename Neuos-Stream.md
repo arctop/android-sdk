@@ -15,7 +15,7 @@ The data is transmitted as JSON objects, allowing easy interpretation in almost 
 
 ## Stream data structure
 
-Currently the server is implemented on Android, it uses a BIG ENDIAN byte order.
+Currently, the server is implemented on Android, it uses a BIG ENDIAN byte order.
 
 All data is sent with a leading 2 bytes defining the size of the following message as an unsigned short / UInt16.
 To properly read the stream, a developer should first read 2 byte, convert the endianness if needed and convert to a UShort.
@@ -218,8 +218,6 @@ The following code illustrates connecting and reading values using a C# Unity3D 
             }
     }
 ```
-
-<<<<<<< HEAD
 
 ## Kotlin Example (Android Client)
 
@@ -455,6 +453,4 @@ This example is shows the usage of android's network discovery API to scan for t
         super.onDestroy()
     }
 }
-=======
-## Kotlin Example (Android Client)
->>>>>>> f1e8980872d523a3f32aecb53e86ed4ae33a2fcc
+
