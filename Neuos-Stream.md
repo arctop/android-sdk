@@ -65,11 +65,162 @@ As described before, the server writes an unsigned short (16 bit uint) into the 
 This allows you to read the next command fully, and convert it into a string/JSON for processing. 
 See [Stream data structure](#stream-data-structure) section for full details.
 
+For a better understanding of commands, values, and constants, please review the [NeuosSDK.java](neuosSDK/src/main/java/io/neuos/NeuosSDK.java) and [INeuosSdkListener.aidl](neuosSDK/src/main/aidl/io/neuos/INeuosSdkListener.aidl) files
+
 ### Session complete
 
 When the user finishes the session on the Neuos™ central app, the server will send out a "sessionComplete" command to the client.
 This will be the final message before the server is shut down. This is your notification to release all resources and shut down the connection on the client's side.
 
 ## C# example (Based on a Unity 3D client)
+
+The following code illustrates connecting and reading values using a C# Unity3D client.
+
+    // Connects to the socket server
+    public void ConnectSocket()
+    {
+        try
+        {
+            // Generate a server address
+            IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse(serverIpInput.text), serverPort);
+            // Construct a TCP socket  
+            m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            // Connect to the address
+            m_Socket.Connect(serverAddress);
+            // Send auth command
+            SendAuth();
+        }
+        catch (FormatException e)
+        {
+            errorField.text = e.Message;
+        }
+        catch (SocketException ex)
+        {
+            errorField.text = ex.Message;
+
+        }
+    }
+    // Sends the Auth Command to the server
+    private void SendAuth()
+    {
+        // Using JSON.Net to produce JSON
+        var JObject = new JObject();
+        JObject.Add(new JProperty("command", "auth"));
+        JObject.Add(new JProperty("apiKey", API_KEY));
+        string toSend = JObject.toString();
+        // Calculate the byte count of our JSON object
+        ushort toSendLen = (ushort)Encoding.UTF8.GetByteCount(toSend);
+        // Get the bytes from the JSON object to send
+        byte[] toSendBytes = Encoding.UTF8.GetBytes(toSend);
+        // Get the bytes describing the length
+        byte[] toSendLenBytes = BitConverter.GetBytes(toSendLen);
+        // Make sure the length bytes are in BIG_ENDIAN
+        if (BitConverter.IsLittleEndian)
+            Array.Reverse(toSendLenBytes);
+        // Send the size bytes
+        m_Socket.Send(toSendLenBytes);
+        // Send the message bytes
+        m_Socket.Send(toSendBytes);
+        // Await response from server
+        GetAuthResponse();
+    }
+    // Gets a single message from the stream
+    private string GetMessage()
+    {
+        // Receiving
+        byte[] m_CommandLength = new byte[2];
+        // Read the next command's length
+        m_Socket.Receive(m_CommandLength);
+        // Make sure it is in BIG_ENDIAN
+        if (BitConverter.IsLittleEndian)
+            Array.Reverse(m_CommandLength);
+        // Convert to unsigned short
+        int rcvLen = BitConverter.ToUInt16(m_CommandLength, 0);
+        // the from stream into buffer the length we just got
+        m_Socket.Receive(m_recBuffer , rcvLen , SocketFlags.None);
+        // convert it to a string that represents the JSON object
+        string rcv = Encoding.UTF8.GetString(m_recBuffer, 0, rcvLen);
+        return rcv;
+    }
+    // Checks the response from the auth command
+    private void GetAuthResponse()
+    {
+        var msg = GetMessage();
+        var response = JObject.Parse(msg);
+        var commandValue = ((string)response.Property("command")?.Value);
+        if (commandValue == "auth-success")
+        {
+            IsConnected = true;
+            /// you are sucessfully connected, start reading the stream in 
+            /// some update loop
+        }
+        else
+        {
+            errorField.text = "Failed to authenticate with server";
+        }
+    }
+    // Update loop reads one message at a time
+    private void Update()
+    {
+        // check that we have at least 2 bytes availabe to read
+        if (m_Socket.Available > 2)
+        {
+            // get one message
+            var data = GetMessage();
+            // turn it into a JSON object for easier parsing
+            var response = JObject.Parse(data);
+            // extract the command value
+            var commandValue = (string)response.Property("command")?.Value;
+            // Command is a value change, read the data
+            if (commandValue == "valueChange")
+            {
+                var key = (string)response.Property("key")?.Value;
+                var value = (float)response.Property("value")?.Value;
+                switch (key)
+                {
+                    case "zone_state":
+                        {
+                            m_values.ZoneValue = value;
+                            // Do something with the zone value
+                            break;
+                        }
+                    case "avg_motion":
+                        {
+                            m_values.MotionValue = value;
+                            // Do something with the motion value
+                            break;
+                        }
+                    case "enjoyment":
+                        {
+                            m_values.EnjoymentValue = value;
+                            // Do something with the enjoyment value
+                            break;
+                        }
+                    case "focus":
+                        {
+                            m_values.FocusValue = value;
+                            // Do something with the focus value
+                            break;
+                        }
+                    case "heart_rate":
+                        {
+                            m_values.HeartRateValue = value;
+                            // Do something with the heart rate value
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                    }
+                }
+                else if (commandValue == "sessionComplete" 
+                    || commandValue == "socketClosing")
+                {
+                    Disconnect();
+                }
+            }
+    }
+
 
 ## Kotlin Example (Android Client)
