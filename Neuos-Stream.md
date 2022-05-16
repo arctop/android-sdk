@@ -210,8 +210,7 @@ The following code illustrates connecting and reading values using a C# Unity3D 
                         }
                     }
                 }
-                else if (commandValue == "sessionComplete" 
-                    || commandValue == "socketClosing")
+                else if (commandValue == "sessionComplete")
                 {
                     Disconnect();
                 }
