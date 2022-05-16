@@ -12,6 +12,11 @@ In short, Neuos brings a new stream of information direct from brain to computer
 
 One way Neuos achieves its high performance analysis is by calibrating itself to each new user. This allows the brain pattern analysis that Neuos performs to be customized and take into account each person's baseline. More information about the calibration is provided in the section [Verify a user is calibrated for Neuos](https://github.com/arctop/Neuos-SDK#verify-a-user-is-calibrated-for-neuos). Calibration is required only one-time for each user and takes approximately 10 minutes to complete.
 
+# Using the SDK with a non Android Client
+
+Neuos™ provides a LAN webserver that allows non Android clients access to the SDK data. For more info see [Stream Server Docs](Neuos-Stream.md)
+It is highly recomended to first read through this documentation to have a better understanding of the SDK before trying to work with the stream server.
+
 # Installation
 
 To add the SDK to your project use **ONE** of the following methods:
