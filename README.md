@@ -14,7 +14,8 @@ One way Neuos achieves its high performance analysis is by calibrating itself to
 
 # Using the SDK with a non Android Client
 
-Neuos™ provides a LAN webserver that allows non Android clients access to the SDK data. For more info see [Stream Server Docs](Neuos-Stream.md)
+Neuos™ provides a LAN webserver that allows non Android clients access to the SDK data. For more info see [Stream Server Docs](Neuos-Stream.md).
+
 It is highly recomended to first read through this documentation to have a better understanding of the SDK before trying to work with the stream server.
 
 # Installation
