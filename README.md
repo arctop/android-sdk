@@ -63,8 +63,7 @@ The SDK contains the following components:
 
 #### Prerequisites
 
-- To use the SDK you'll need to install Neuos Cental app on your Android device, to request an invite to the closed beta please fill in the following [form](https://forms.gle/yuAehbx1xEPvpzgPA).
-- The current version of Neuos Central app requires Android version 11 or 12. Legacy support for older versions of Android is coming.
+To use the SDK you'll need to install Neuos Cental app on your Android device, to request an invite to the closed beta please fill in the following [form](https://forms.gle/yuAehbx1xEPvpzgPA).
 
 #### Permissions
 
