@@ -68,6 +68,12 @@ For a better understanding of commands, values, and constants, please review the
 When the user finishes the session on the Neuos central app, the server will send out a "sessionComplete" command to the client.
 This will be the final message before the server is shutting down. Please use it as your notification to release all resources and shut down the connection on your client side.
 
+## Example repo
+
+The Neuos Socket Client repo contains a functional example for Unity3D / C#
+
+https://github.com/arctop/neuos-socket-client
+
 ## C# example (Based on a Unity 3D client)
 
 The following code illustrates connecting and reading values using a C# Unity3D client.

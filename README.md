@@ -38,10 +38,11 @@ The SDK contains the following components:
 
 ## Setup Phase
 
-1. [Neuos Permissions](#permissions)
-2. [Bind to service](#binding-to-the-service)
-3. [Initialize the SDK with your API key](#initialize-the-sdk-with-your-api-key)
-4. [Register for callbacks](#register-for-callbacks)
+1. [Prerequisites](#prerequisites)
+2. [Neuos Permissions](#permissions)
+3. [Bind to service](#binding-to-the-service)
+4. [Initialize the SDK with your API key](#initialize-the-sdk-with-your-api-key)
+5. [Register for callbacks](#register-for-callbacks)
 
 ## Session Phase
 
@@ -59,6 +60,10 @@ The SDK contains the following components:
 2. [Unbind from the service](#unbind-from-the-service)
 
 ### Setup Phase
+
+#### Prerequisites
+
+To use the SDK you'll need to install Neuos Cental app on your Android device, to request an invite to the closed beta please fill in the following [form](https://forms.gle/yuAehbx1xEPvpzgPA).
 
 #### Permissions
 
@@ -332,3 +337,9 @@ Call **shutdownSdk()** to have Neuos release all of its resources.
 #### Unbind from the service
 
 Once the SDK is shutdown, you can safely unbind from the service.
+
+# Using the SDK with a non Android Client
+
+Neuos™ provides a LAN webserver that allows non Android clients access to the SDK data. For more info see [Stream Server Docs](Neuos-Stream.md).
+
+It is highly recomended to first read through this documentation to have a better understanding of the SDK before trying to work with the stream server.
