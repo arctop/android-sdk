@@ -59,6 +59,13 @@ interface INeuosSdk {
     */
     void writeMarker(in int markerId , in String line);
     /**
+    * Requests a marker to be written into the current session's data files with a specified timestamp
+    * @param markerId numerical identifier of marker
+    * @param line extra data line, can be plain text or JSON encoded values
+    * @param timeStamp unix time stamp in MS to use for marker
+    */
+    void writeTimedMarker(in int markerId , in String line , in long timeStamp);
+    /**
     * Finishes a running prediction session.
     * This will close out all the data files and upload them to neuosCloud
     * calls {@link INeuosSdkListener#onSessionComplete()} once the operation completed
