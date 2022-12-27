@@ -13,6 +13,10 @@ oneway interface INeuosSdkListener {
     * @param currentConnection the current connection status
     */
     void onConnectionChanged(in int previousConnection ,in int currentConnection);
+
+    // motion type 0 = acc 1 = gyro
+    void onMotionData(in float[] motionData , in int motionType);
+
     /**
     * Reports a value changed during prediciton.
     * @param key the value's key name {@link NeuosSDK#PredictionValues}
