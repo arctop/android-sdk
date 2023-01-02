@@ -204,12 +204,6 @@ The following code illustrates connecting and reading values using a C# Unity3D 
                             // Do something with the focus value
                             break;
                         }
-                    case "heart_rate":
-                        {
-                            m_values.HeartRateValue = value;
-                            // Do something with the heart rate value
-                            break;
-                        }
                     default:
                         {
                             break;
