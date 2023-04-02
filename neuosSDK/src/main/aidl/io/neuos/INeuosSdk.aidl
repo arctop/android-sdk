@@ -113,5 +113,8 @@ interface INeuosSdk {
     * @param listener INeuosQAListener implementation
     */
     void unregisterUploadCallback(INeuosSessionUploadListener listener);
-
+    /**
+    * Attempts to re-upload last session in case it failed.
+    */
+    int retryUploadLastSession();
 }
