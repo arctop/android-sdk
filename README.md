@@ -236,6 +236,8 @@ To verify that a user is calibrated, call the service to check the status:
 In case the user is not calibrated, launch an intent to send the user into the calibration: 
 
     Intent activityIntent = new Intent(NeuosSDK.NEUOS_CALIBRATION);
+    activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(activityIntent)
 
 #### Connect to a Neuos sensor device 
 
