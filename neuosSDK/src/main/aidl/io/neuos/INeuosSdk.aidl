@@ -29,6 +29,10 @@ interface INeuosSdk {
     * */
     int getUserLoginStatus();
     /**
+    * Logs the current user out of the system
+    */
+    oneway void logoutUser();
+    /**
     * Requests connection to a sensor device via it's MAC Address
     * connection status is reported back via {@link INeuosSdkListener#onConnectionChanged(int previousConnection ,int currentConnection)}
     * @param macAddress the device's MAC address to attempt connection to
