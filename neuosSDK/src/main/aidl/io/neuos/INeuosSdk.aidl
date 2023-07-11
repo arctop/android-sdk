@@ -121,4 +121,8 @@ interface INeuosSdk {
     * Attempts to re-upload last session in case it failed.
     */
     int retryUploadLastSession();
+    /**
+    *  returns the prefix that is used in file names for this session
+    */
+    String getCurrentSessionBaseFilename();
 }
