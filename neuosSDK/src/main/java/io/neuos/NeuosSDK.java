@@ -93,6 +93,7 @@ public final class NeuosSDK {
         public static final String FOCUS_STATE = "focus";
         public static final String ENJOYMENT_STATE = "enjoyment";
         public static final String AVG_MOTION = "avg_motion";
+        public static final String HEART_RATE = "heart_rate";
     }
 
     /**
