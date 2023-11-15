@@ -25,5 +25,7 @@ data class NeuosQAProperties(
         const val STAND_ALONE:String = "standalone"
         const val RUN_IN_DEBUG:String = "debug"
         const val INFINITE_TIMEOUT:Float = 0f
+        const val APPLICATION_NAME:String = "appname"
+        const val APPLICATION_CATEGORY:String = "appcategory"
     }
 }
