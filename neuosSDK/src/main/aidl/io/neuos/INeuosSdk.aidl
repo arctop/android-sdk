@@ -125,4 +125,8 @@ interface INeuosSdk {
     *  returns the prefix that is used in file names for this session
     */
     String getCurrentSessionBaseFilename();
+    /**
+    *   returns the name of currently connected headband, or an empty string
+    */
+    String getConnectedSensorDeviceName();
 }
