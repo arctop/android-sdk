@@ -19,11 +19,6 @@ public final class NeuosSDK {
         public static final int DISCONNECTED_UPON_REQUEST = 5;
     }
 
-    public static final class RawMotionData {
-        public static final int Accelerometer = 0;
-        public static final  int Gyroscope = 1;
-    }
-
     /**
      * Response Codes.
      * These arrive via {@link INeuosSdkListener#onError(int, String)}

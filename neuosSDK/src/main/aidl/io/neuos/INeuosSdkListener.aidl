@@ -15,13 +15,6 @@ oneway interface INeuosSdkListener {
     void onConnectionChanged(in int previousConnection ,in int currentConnection);
 
     /**
-    * Reports values of raw motion data
-    * @param motionData - array holding axis data (x = 0, y = 1, z = 2)
-    * @param motionType - the type of motion sensor {@link NeuosSDK#RawMotionData}
-    */
-    void onMotionData(in float[] motionData , in int motionType);
-
-    /**
     * Reports a value changed during prediciton.
     * @param key the value's key name {@link NeuosSDK#PredictionValues}
     * @param value the current value
