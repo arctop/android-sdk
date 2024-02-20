@@ -78,6 +78,7 @@ public final class NeuosSDK {
      */
     public static final class Predictions {
         public static final String ZONE = "zone";
+        public static final String GAME = "game_zone";
     }
 
     /**
