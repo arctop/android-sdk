@@ -1,5 +1,5 @@
 // IArctopSdkListener.aidl
-package io.arctop;
+package com.arctop;
 
 /**
 * SDK Listener interface.

@@ -1,4 +1,4 @@
-package io.arctop
+package com.arctop
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

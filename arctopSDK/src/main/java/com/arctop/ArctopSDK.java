@@ -1,4 +1,4 @@
-package io.arctop;
+package com.arctop;
 
 /**
  * arctopSDK Constants definitions
@@ -106,20 +106,20 @@ public final class ArctopSDK {
     /*
     * Permission name constant
     * */
-    public static final String ARCTOP_PERMISSION = "io.arctop.permission.ARCTOP_DATA";
+    public static final String ARCTOP_PERMISSION = "com.arctop.permission.ARCTOP_DATA";
 
     /**
      * Public activity names that can be launched by a client
      * */
-    public static final String ARCTOP_PAIR_DEVICE = "io.arctop.PairDevice";
-    public static final String ARCTOP_LOGIN ="io.arctop.ArctopLogin";
-    public static final String ARCTOP_QA_SCREEN = "io.arctop.QAScreen";
-    public static final String ARCTOP_CALIBRATION = "io.arctop.ArctopCalibration";
+    public static final String ARCTOP_PAIR_DEVICE = "com.arctop.PairDevice";
+    public static final String ARCTOP_LOGIN ="com.arctop.ArctopLogin";
+    public static final String ARCTOP_QA_SCREEN = "com.arctop.QAScreen";
+    public static final String ARCTOP_CALIBRATION = "com.arctop.ArctopCalibration";
 
     /**
      * Constants used for pairing activity
      * */
-    public static final String IO_ARCTOP_DEVICE_PAIRING_ACTION = "io.arctop.device_connect";
+    public static final String IO_ARCTOP_DEVICE_PAIRING_ACTION = "com.arctop.device_connect";
     public static final int SELECT_DEVICE_REQUEST_CODE = 66;
     public static final String DEVICE_ADDRESS_EXTRA = "deviceAddress";
     public static final String DEVICE_NAME_EXTRA = "deviceName";

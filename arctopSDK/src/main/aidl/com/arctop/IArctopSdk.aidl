@@ -1,8 +1,8 @@
 // IArctopSdk.aidl
-package io.arctop;
-import io.arctop.IArctopSdkListener;
-import io.arctop.IArctopQAListener;
-import io.arctop.IArctopSessionUploadListener;
+package com.arctop;
+import com.arctop.IArctopSdkListener;
+import com.arctop.IArctopQAListener;
+import com.arctop.IArctopSessionUploadListener;
 
 interface IArctopSdk {
 

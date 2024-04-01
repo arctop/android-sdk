@@ -1,15 +1,15 @@
-# Neuos™ Stream Server
+# Arctop™ Stream Server
 
 The purpose of Stream Server is to provide a platform independent API.
-The server is running on the mobile device and operates on the user's LAN. It allows authorized clients to access the realtime data that Neuos provides.
+The server is running on the mobile device and operates on the user's LAN. It allows authorized clients to access the realtime data that Arctop provides.
 
 ## General Structure
 
-The Neuos Central app launches a socket server on the LAN it is connected to. It publishes the service for discovery, and awaits connections from clients.
+The Arctop Central app launches a socket server on the LAN it is connected to. It publishes the service for discovery, and awaits connections from clients.
 
 When a client connects, an authentication handshake is performed, and once successful, the server will transmit the data 
-received over the network stream. The data is identical to what a client connecting directly to Neuos SDK receives
-via the INeuosSdkListener interface.
+received over the network stream. The data is identical to what a client connecting directly to Arctop SDK receives
+via the IArctopSdkListener interface.
 
 The data is transmitted as JSON objects, allowing easy interpretation in almost any programming language.
 
@@ -27,21 +27,21 @@ Those bytes should then be converted to a UTF8 string, that will contain the JSO
 Every command that is sent between the server and the client follows the same structure.
 
 1. A mandatory *command* field, describing the type of command.
-2. Optional values defined per command (see [NeuosStreamService.kt](neuosSDK/src/main/java/io/neuos/NeuosStreamService.kt))
+2. Optional values defined per command (see [ArctopStreamService.kt](arctopSDK/src/main/java/io/arctop/ArctopStreamService.kt))
 3. Timestamp ( only available within commands sent as part of the stream ) as a long int (Unix MS)
 
 an example of an object notifying the client of a new value received for enjoyment:
 ```JSON
     {"command" : "valueChange" , "timestamp" : 123612321 , "key" : "enjoyment" , "value" : 33.4442}
 ```
-All the available commands, values, and object key are listed in the [NeuosStreamService.kt](neuosSDK/src/main/java/io/neuos/NeuosStreamService.kt) file.
+All the available commands, values, and object key are listed in the [ArctopStreamService.kt](arctopSDK/src/main/java/io/arctop/ArctopStreamService.kt) file.
 
 ## Connection flow
 
 ### Connect to server
    
-The Neuos Central app provides its IP / Port on the SDK Stream page, your client will need to connect to that address. 
-The server also publishes itself on the LAN as a service by the name of *NeuosService* and the protocol *_http._tcp*.
+The Arctop Central app provides its IP / Port on the SDK Stream page, your client will need to connect to that address. 
+The server also publishes itself on the LAN as a service by the name of *ArctopService* and the protocol *_http._tcp*.
 
 ### Send authentication request 
 
@@ -61,18 +61,18 @@ Once the server starts streaming commands, you should read the stream to extract
 As described in [Stream data structure](#stream-data-structure), before each message the server writes an unsigned short (16 bit uint) into the stream to let the client know the size of the next message in bytes.
 This allows the client to read messages fully, and convert into a string/JSON for processing.
 
-For a better understanding of commands, values, and constants, please review the [NeuosSDK.java](neuosSDK/src/main/java/io/neuos/NeuosSDK.java) and [INeuosSdkListener.aidl](neuosSDK/src/main/aidl/io/neuos/INeuosSdkListener.aidl) files.
+For a better understanding of commands, values, and constants, please review the [ArctopSDK.java](arctopSDK/src/main/java/io/arctop/ArctopSDK.java) and [IArctopSdkListener.aidl](arctopSDK/src/main/aidl/io/arctop/IArctopSdkListener.aidl) files.
 
 ### Session complete
 
-When the user finishes the session on the Neuos central app, the server will send out a "sessionComplete" command to the client.
+When the user finishes the session on the Arctop central app, the server will send out a "sessionComplete" command to the client.
 This will be the final message before the server is shutting down. Please use it as your notification to release all resources and shut down the connection on your client side.
 
 ## Example repo
 
-The Neuos Socket Client repo contains a functional example for Unity3D / C#
+The Arctop Socket Client repo contains a functional example for Unity3D / C#
 
-https://github.com/arctop/neuos-socket-client
+https://github.com/arctop/arctop-socket-client
 
 ## C# example (Based on a Unity 3D client)
 
@@ -220,13 +220,13 @@ The following code illustrates connecting and reading values using a C# Unity3D 
 
 ## Kotlin Example (Android Client)
 
-This example shows a usage of Android's network discovery API to scan for the Neuos server before connecting.
+This example shows a usage of Android's network discovery API to scan for the Arctop server before connecting.
 ```kotlin    
     //Main Activity, scans for the service
     class MainActivity : AppCompatActivity() {
         companion object {
-            private const val TAG = "Neuos-Service"
-            private const val SERVICE_NAME = "NeuosService"
+            private const val TAG = "Arctop-Service"
+            private const val SERVICE_NAME = "ArctopService"
             private const val SERVICE_TYPE = "_http._tcp"
         }
         lateinit var nsdManager: NsdManager
@@ -245,9 +245,9 @@ This example shows a usage of Android's network discovery API to scan for the Ne
         }
         // This function launches the connection
         fun launchStream(){
-            val streamIntent = Intent(this, NeuosStreamActivity::class.java)
-            streamIntent.putExtra(NeuosStreamActivity.IP , ip.value)
-            streamIntent.putExtra(NeuosStreamActivity.PORT , port.value)
+            val streamIntent = Intent(this, ArctopStreamActivity::class.java)
+            streamIntent.putExtra(ArctopStreamActivity.IP , ip.value)
+            streamIntent.putExtra(ArctopStreamActivity.PORT , port.value)
             startActivity(streamIntent)
         }
         @Composable
@@ -336,12 +336,12 @@ This example shows a usage of Android's network discovery API to scan for the Ne
     }
 
 
-    class NeuosStreamActivity : AppCompatActivity() {
+    class ArctopStreamActivity : AppCompatActivity() {
     companion object {
         const val API_KEY = "your api key"
         const val IP = "ip"
         const val PORT = "port"
-        const val TAG = "Neuos-Service"
+        const val TAG = "Arctop-Service"
         const val COMMAND = "command"
         const val VALUE = "value"
         const val AUTH = "auth"
@@ -404,7 +404,7 @@ This example shows a usage of Android's network discovery API to scan for the Ne
                             // of the message and all the convertions out of the box
                             while (dataInputStream!!.available() > 0){
                                 val data = dataInputStream!!.readUTF()
-                                Log.i("NeuosData", "Received: $data")
+                                Log.i("ArctopData", "Received: $data")
                             }
                             Thread.sleep(1000L)
                         }

@@ -1,4 +1,4 @@
-package io.arctop;
+package com.arctop;
 /**
 * QA listener interface
 * Provides feedback on signal quality and headband status

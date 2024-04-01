@@ -70,7 +70,7 @@ To use the SDK you'll need to install Arctop Cental app on your Android device, 
 Before binding to Arctop and receiving data, you will need to request permissions from the user.
 In your *AndroidManifest.XML*, declare that you will be using the ARCTOP_DATA permission:
 
-    <uses-permission android:name="io.arctop.permission.ARCTOP_DATA" />
+    <uses-permission android:name="com.arctop.permission.ARCTOP_DATA" />
 
 Then, at runtime, verify that you have that permission, or request it from the user, as per:
 
@@ -85,7 +85,7 @@ In order to perform the bind, you will need to declare that your application wil
 This is done by adding this snippet into your *AndroidManifest.XML*
 
     <queries>
-        <package android:name="io.arctop.central" />
+        <package android:name="com.arctop.app" />
     </queries>
 
 [Query element reference in Android developer guide](https://developer.android.com/guide/topics/manifest/queries-element)
