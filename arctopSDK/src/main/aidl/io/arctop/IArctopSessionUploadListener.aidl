@@ -1,13 +1,13 @@
-package io.neuos;
+package io.arctop;
 
 /**
 * Listener interface allowing reception of messages regarding
 * upload progress of session
 */
-interface INeuosSessionUploadListener {
+interface IArctopSessionUploadListener {
     /**
     * Reports status of current upload phases
-    * values are defined {@link NeuosSDK#UploadStatus}
+    * values are defined {@link ArctopSDK#UploadStatus}
     */
     void onUploadStatus(in int status);
     /**

@@ -1,14 +1,14 @@
-// INeuosSdkListener.aidl
-package io.neuos;
+// IArctopSdkListener.aidl
+package io.arctop;
 
 /**
 * SDK Listener interface.
 * Provides callbacks from service into client
 */
-oneway interface INeuosSdkListener {
+oneway interface IArctopSdkListener {
     /**
     * Reports headband connection status changes.
-    * See {@link NeuosSDK#ConnectionState} for valid values
+    * See {@link ArctopSDK#ConnectionState} for valid values
     * @param previousConnection the previous connection status
     * @param currentConnection the current connection status
     */
@@ -16,13 +16,13 @@ oneway interface INeuosSdkListener {
 
     /**
     * Reports a value changed during prediciton.
-    * @param key the value's key name {@link NeuosSDK#PredictionValues}
+    * @param key the value's key name {@link ArctopSDK#PredictionValues}
     * @param value the current value
     */
     void onValueChanged(in String key,in float value);
     /**
     * Reports QA status during prediction
-    * See {@link NeuosSDK#QAFailureType}
+    * See {@link ArctopSDK#QAFailureType}
     * @param passed did QA pass for current run
     * @param type if QA failed, provides the reason for failure
     */
@@ -33,7 +33,7 @@ oneway interface INeuosSdkListener {
     void onSessionComplete();
     /**
     * Callback for SDK errors encountered during opertion
-    * see {@link NeuosSDK#ResponseCodes} for valid codes
+    * see {@link ArctopSDK#ResponseCodes} for valid codes
     * @param errorCode the current error code
     * @param message extra data on the error
     */

@@ -1,14 +1,14 @@
-package io.neuos;
+package io.arctop;
 
 /**
- * neuosSDK Constants definitions
- * Holds all values arriving via {@link INeuosSdkListener} AIDL callback methods
+ * arctopSDK Constants definitions
+ * Holds all values arriving via {@link IArctopSdkListener} AIDL callback methods
  * */
-public final class NeuosSDK {
+public final class ArctopSDK {
 
     /**
      * Connection values.
-     * These arrive via {@link INeuosSdkListener#onConnectionChanged(int, int)}
+     * These arrive via {@link IArctopSdkListener#onConnectionChanged(int, int)}
      **/
     public static final class ConnectionState {
         public static final int UNKNOWN  = 0;
@@ -21,7 +21,7 @@ public final class NeuosSDK {
 
     /**
      * Response Codes.
-     * These arrive via {@link INeuosSdkListener#onError(int, String)}
+     * These arrive via {@link IArctopSdkListener#onError(int, String)}
      * Or are returned as responses from functions
      **/
 
@@ -44,7 +44,7 @@ public final class NeuosSDK {
 
     /**
      * User login status results
-     * Received via {@link INeuosSdk#getUserLoginStatus()}
+     * Received via {@link IArctopSdk#getUserLoginStatus()}
      */
     public static final class LoginStatus {
         public static final int NOT_LOGGED_IN = 0;
@@ -53,7 +53,7 @@ public final class NeuosSDK {
 
     /**
      * User calibration status results
-     * Received via {@link INeuosSdk#checkUserCalibrationStatus()}
+     * Received via {@link IArctopSdk#checkUserCalibrationStatus()}
      */
     public static final class UserCalibrationStatus {
         public static final int BLOCKED  = -1;
@@ -64,7 +64,7 @@ public final class NeuosSDK {
 
     /**
      * QA Failure type results
-     * Recieved via {@link INeuosSdkListener#onQAStatus(boolean, int)}
+     * Recieved via {@link IArctopSdkListener#onQAStatus(boolean, int)}
      * */
     public static final class QAFailureType {
         public static final int HEADBAND_OFF_HEAD = 1;
@@ -74,7 +74,7 @@ public final class NeuosSDK {
 
     /**
      * Names of predictions available
-     * Use these when calling {@link INeuosSdk#startPredictionSession(String)}
+     * Use these when calling {@link IArctopSdk#startPredictionSession(String)}
      */
     public static final class Predictions {
         public static final String ZONE = "zone";
@@ -82,7 +82,7 @@ public final class NeuosSDK {
     }
 
     /**
-     * Names of prediction values available via {@link INeuosSdkListener#onValueChanged(String, float)}
+     * Names of prediction values available via {@link IArctopSdkListener#onValueChanged(String, float)}
      */
     public static final class PredictionValues{
         public static final String ZONE_STATE = "zone_state";
@@ -106,20 +106,20 @@ public final class NeuosSDK {
     /*
     * Permission name constant
     * */
-    public static final String NEUOS_PERMISSION = "io.neuos.permission.NEUOS_DATA";
+    public static final String ARCTOP_PERMISSION = "io.arctop.permission.ARCTOP_DATA";
 
     /**
      * Public activity names that can be launched by a client
      * */
-    public static final String NEUOS_PAIR_DEVICE = "io.neuos.PairDevice";
-    public static final String NEUOS_LOGIN ="io.neuos.NeuosLogin";
-    public static final String NEUOS_QA_SCREEN = "io.neuos.QAScreen";
-    public static final String NEUOS_CALIBRATION = "io.neuos.NeuosCalibration";
+    public static final String ARCTOP_PAIR_DEVICE = "io.arctop.PairDevice";
+    public static final String ARCTOP_LOGIN ="io.arctop.ArctopLogin";
+    public static final String ARCTOP_QA_SCREEN = "io.arctop.QAScreen";
+    public static final String ARCTOP_CALIBRATION = "io.arctop.ArctopCalibration";
 
     /**
      * Constants used for pairing activity
      * */
-    public static final String IO_NEUOS_DEVICE_PAIRING_ACTION = "io.neuos.device_connect";
+    public static final String IO_ARCTOP_DEVICE_PAIRING_ACTION = "io.arctop.device_connect";
     public static final int SELECT_DEVICE_REQUEST_CODE = 66;
     public static final String DEVICE_ADDRESS_EXTRA = "deviceAddress";
     public static final String DEVICE_NAME_EXTRA = "deviceName";

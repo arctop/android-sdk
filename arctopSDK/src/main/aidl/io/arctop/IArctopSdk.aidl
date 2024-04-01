@@ -1,10 +1,10 @@
-// INeuosSdk.aidl
-package io.neuos;
-import io.neuos.INeuosSdkListener;
-import io.neuos.INeuosQAListener;
-import io.neuos.INeuosSessionUploadListener;
+// IArctopSdk.aidl
+package io.arctop;
+import io.arctop.IArctopSdkListener;
+import io.arctop.IArctopQAListener;
+import io.arctop.IArctopSessionUploadListener;
 
-interface INeuosSdk {
+interface IArctopSdk {
 
     /**
     * Begins calibration session.
@@ -16,16 +16,16 @@ interface INeuosSdk {
     /**
     * Initializes the SDK for usage
     * @param apiKey the client's api key to validate usage
-    * @return int value from {@link NeuosSDK#ResponseCodes}
+    * @return int value from {@link ArctopSDK#ResponseCodes}
     */
-    int initializeNeuos(in String apiKey);
+    int initializeArctop(in String apiKey);
     /**
     * Shuts down the sdk and releases resources
     */
     void shutdownSdk();
     /**
     * Retrieves the user's login status.
-    * @return int value from {@link NeuosSDK#LoginStatus}
+    * @return int value from {@link ArctopSDK#LoginStatus}
     * */
     int getUserLoginStatus();
     /**
@@ -34,25 +34,25 @@ interface INeuosSdk {
     oneway void logoutUser();
     /**
     * Requests connection to a sensor device via it's MAC Address
-    * connection status is reported back via {@link INeuosSdkListener#onConnectionChanged(int previousConnection ,int currentConnection)}
+    * connection status is reported back via {@link IArctopSdkListener#onConnectionChanged(int previousConnection ,int currentConnection)}
     * @param macAddress the device's MAC address to attempt connection to
     */
     oneway void connectSensorDevice(in String macAddress);
     /**
     * Requests a disconnect from currently connected sensor device
-    * connection status is reported back via {@link INeuosSdkListener#onConnectionChanged(int previousConnection ,int currentConnection)}
+    * connection status is reported back via {@link IArctopSdkListener#onConnectionChanged(int previousConnection ,int currentConnection)}
     */
     oneway void disconnectSensorDevice();
     /**
     * Checks the current user's calibration status
     * only calibrated users with available models can run predictions
-    * @return int value from {@link NeuosSDK#UserCalibrationStatus}
+    * @return int value from {@link ArctopSDK#UserCalibrationStatus}
     */
     int checkUserCalibrationStatus();
     /**
     * Begins a prediction session for the desired prediction
     * @param predictionName the prediction component's name / key to run
-    * @return int value from {@link NeuosSDK#ResponseCodes}
+    * @return int value from {@link ArctopSDK#ResponseCodes}
     */
     int startPredictionSession(in String predictionName);
     /**
@@ -71,52 +71,52 @@ interface INeuosSdk {
     void writeTimedMarker(in int markerId , in String line , in long timeStamp);
     /**
     * Finishes a running prediction session.
-    * This will close out all the data files and upload them to neuosCloud
-    * calls {@link INeuosSdkListener#onSessionComplete()} once the operation completed
+    * This will close out all the data files and upload them to arctopCloud
+    * calls {@link IArctopSdkListener#onSessionComplete()} once the operation completed
     * the return code only pertains to the session close functionality, and is used to validate
     * that your app's call was accepted. You should still listen for the callback to complete.
-    * @return int value from {@link NeuosSDK#ResponseCodes}
+    * @return int value from {@link ArctopSDK#ResponseCodes}
     */
     int finishSession();
     /**
     * Terminates a session in the event that QA has failed.
     * will close out the session data but will prevent uploading to cloud
-    * @return int value from {@link NeuosSDK#ResponseCodes}
+    * @return int value from {@link ArctopSDK#ResponseCodes}
     */
     int terminateSessionQaFailed();
     /**
     * Registers for SDK callbacks
-    * @param listener INeuosSdkListener implementation
-    * @return int value from {@link NeuosSDK#ResponseCodes}
+    * @param listener IArctopSdkListener implementation
+    * @return int value from {@link ArctopSDK#ResponseCodes}
     */
-    int registerSDKCallback(in INeuosSdkListener listener);
+    int registerSDKCallback(in IArctopSdkListener listener);
     /**
     * Unregisters from SDK callbacks
     * @param listener previously registered listener
     */
-    void unregisterSDKCallback(in INeuosSdkListener listener);
+    void unregisterSDKCallback(in IArctopSdkListener listener);
     /**
     * Registers for QA callbacks
-    * @param listener INeuosQAListener implementation
-    * @return int value from {@link NeuosSDK#ResponseCodes}
+    * @param listener IArctopQAListener implementation
+    * @return int value from {@link ArctopSDK#ResponseCodes}
     */
-    int registerQACallback(in INeuosQAListener listener);
+    int registerQACallback(in IArctopQAListener listener);
     /**
     * Unregisters for QA callbacks
-    * @param listener INeuosQAListener implementation
+    * @param listener IArctopQAListener implementation
     */
-    void unregisterQACallback(in INeuosQAListener listener);
+    void unregisterQACallback(in IArctopQAListener listener);
     /**
     * Registers for Upload callbacks
-    * @param listener INeuosQAListener implementation
-    * @return int value from {@link NeuosSDK#ResponseCodes}
+    * @param listener IArctopQAListener implementation
+    * @return int value from {@link ArctopSDK#ResponseCodes}
     */
-    int registerUploadCallback(INeuosSessionUploadListener listener);
+    int registerUploadCallback(IArctopSessionUploadListener listener);
     /**
     * Unregisters for Upload callbacks
-    * @param listener INeuosQAListener implementation
+    * @param listener IArctopQAListener implementation
     */
-    void unregisterUploadCallback(INeuosSessionUploadListener listener);
+    void unregisterUploadCallback(IArctopSessionUploadListener listener);
     /**
     * Attempts to re-upload last session in case it failed.
     */

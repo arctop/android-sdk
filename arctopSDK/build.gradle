@@ -6,7 +6,7 @@ plugins {
 
 android {
     compileSdk 34
-    namespace "io.neuos.sdk"
+    namespace "io.arctop.sdk"
     defaultConfig {
         minSdkVersion 29
         targetSdkVersion 34

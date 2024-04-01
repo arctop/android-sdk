@@ -1,9 +1,9 @@
-package io.neuos;
+package io.arctop;
 /**
 * QA listener interface
 * Provides feedback on signal quality and headband status
 */
-oneway interface INeuosQAListener {
+oneway interface IArctopQAListener {
     /**
     * Reports the signal quality values for each
     * electrode on the headband.
@@ -31,7 +31,7 @@ oneway interface INeuosQAListener {
     void onDevicePluggedInStatusChange(in boolean pluggedIn);
     /**
     * Reports headband connection status changes.
-    * See {@link NeuosSDK#ConnectionState} for valid values
+    * See {@link ArctopSDK#ConnectionState} for valid values
     * @param previousConnection the previous connection status
     * @param currentConnection the current connection status
     */
