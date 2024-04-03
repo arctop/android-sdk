@@ -10,7 +10,7 @@ The current version of Arctop app provides three unique brain data streams: Focu
 
 In short, Arctop app brings a new stream of information direct from brain to computer and it can be used to power all sorts of applications/uses.
 
-One way Arctop achieves its high performance analysis is by calibrating itself to each new user. This allows the brain pattern analysis that we performs to be customized and take into account each person's baseline. More information about the calibration is provided in the section [Verify a user is calibrated for Arctop](https://github.com/arctop/Neuos-SDK#verify-a-user-is-calibrated-for-neuos). Calibration is required only one-time for each user and takes approximately 10 minutes to complete.
+One way Arctop achieves its high performance analysis is by calibrating itself to each new user. This allows the brain pattern analysis that we performs to be customized and take into account each person's baseline. More information about the calibration is provided in the section [Verify a user is calibrated for Arctop](https://github.com/arctop/android-sdk#verify-a-user-is-calibrated-for-arctop). Calibration is required only one-time for each user and takes approximately 10 minutes to complete.
 
 # Installation
 
@@ -39,7 +39,7 @@ The SDK contains the following components:
 ## Setup Phase
 
 1. [Prerequisites](#prerequisites)
-2. [Neuos Permissions](#permissions)
+2. [Permissions](#permissions)
 3. [Bind to service](#binding-to-the-service)
 4. [Initialize the SDK with your API key](#initialize-the-sdk-with-your-api-key)
 5. [Register for callbacks](#register-for-callbacks)
@@ -47,8 +47,8 @@ The SDK contains the following components:
 ## Session Phase
 
 1. [Verify that a user is logged in](#verify-a-user-is-logged-in)
-2. [Verify that a user has been calibrated for Neuos](#verify-a-user-is-calibrated-for-neuos)
-3. [Connect to a Neuos sensor device](#connect-to-a-neuos-sensor-device)
+2. [Verify that a user has been calibrated for Arctop](#verify-a-user-is-calibrated-for-arctop)
+3. [Connect to a Arctop sensor device](#connect-to-a-arctop-sensor-device)
 4. [Verify Signal Quality of device](#verify-signal-quality-of-device)
 5. [Begin a session](#begin-a-session)
 6. [Work with session data](#work-with-session-data)
