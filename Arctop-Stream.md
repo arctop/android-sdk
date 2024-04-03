@@ -1,15 +1,13 @@
-# Neuos™ Stream Server
+# Arctop Stream Server
 
 The purpose of Stream Server is to provide a platform independent API.
-The server is running on the mobile device and operates on the user's LAN. It allows authorized clients to access the realtime data that Neuos provides.
+The server is running on the mobile device and operates on the user's LAN. It allows authorized clients to access the realtime data that Arctop provides.
 
 ## General Structure
 
-The Neuos Central app launches a socket server on the LAN it is connected to. It publishes the service for discovery, and awaits connections from clients.
+The Arctop app launches a socket server on the LAN it is connected to. It publishes the service for discovery, and awaits connections from clients.
 
-When a client connects, an authentication handshake is performed, and once successful, the server will transmit the data 
-received over the network stream. The data is identical to what a client connecting directly to Neuos SDK receives
-via the INeuosSdkListener interface.
+When a client connects, an authentication handshake is performed, and once successful, the server will transmit the data received over the network stream. The data is identical to what a client connecting directly to Arctop Native SDK receives via the INeuosSdkListener interface.
 
 The data is transmitted as JSON objects, allowing easy interpretation in almost any programming language.
 
@@ -40,7 +38,7 @@ All the available commands, values, and object key are listed in the [NeuosStrea
 
 ### Connect to server
    
-The Neuos Central app provides its IP / Port on the SDK Stream page, your client will need to connect to that address. 
+The Arctop app provides its IP / Port on the SDK Stream page, your client will need to connect to that address. 
 The server also publishes itself on the LAN as a service by the name of *NeuosService* and the protocol *_http._tcp*.
 
 ### Send authentication request 
@@ -65,14 +63,14 @@ For a better understanding of commands, values, and constants, please review the
 
 ### Session complete
 
-When the user finishes the session on the Neuos central app, the server will send out a "sessionComplete" command to the client.
+When the user finishes the session on the Arctop app, the server will send out a "sessionComplete" command to the client.
 This will be the final message before the server is shutting down. Please use it as your notification to release all resources and shut down the connection on your client side.
 
 ## Example repo
 
-The Neuos Socket Client repo contains a functional example for Unity3D / C#
+The Arctop Socket Client repo contains a functional example for Unity3D / C#
 
-https://github.com/arctop/neuos-socket-client
+[https://github.com/arctop/neuos-socket-client](https://github.com/arctop/arctop-socket-client)
 
 ## C# example (Based on a Unity 3D client)
 
@@ -220,7 +218,7 @@ The following code illustrates connecting and reading values using a C# Unity3D 
 
 ## Kotlin Example (Android Client)
 
-This example shows a usage of Android's network discovery API to scan for the Neuos server before connecting.
+This example shows a usage of Android's network discovery API to scan for the Arctop Stream Socket before connecting.
 ```kotlin    
     //Main Activity, scans for the service
     class MainActivity : AppCompatActivity() {
