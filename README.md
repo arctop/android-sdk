@@ -1,22 +1,22 @@
-# Neuos™ Software Development Kit (SDK)
+# Arctop Native Android SDK (Software Development Kit)
 
-The Neuos SDK public repository contains everything you need to connect your application to Neuos services. 
+The Arctop SDK repository contains everything you need to connect your application to Arctop services. 
 
 # Background
 
-Neuos is a noninvasive neural interface technology that is the fruit of deep R&D performed by Arctop Inc. It is fully working, developed, and comes out of proven research — a reference you may find helpful is a peer-reviewed article in Frontiers in Computational Neuroscience where Neuos SDK was used for a personalized audio application: https://www.frontiersin.org/articles/10.3389/fncom.2021.760561/full
+Arctop platform is a noninvasive neural interface technology that is the fruit of deep R&D performed by Arctop Inc. It is fully working, developed, and comes out of proven research — a reference you may find helpful is a peer-reviewed article in Frontiers in Computational Neuroscience where Arctop SDK was used for a personalized audio application: https://www.frontiersin.org/articles/10.3389/fncom.2021.760561/full
 
-The current version of Neuos provides three unique brain data streams: Focus, Enjoyment, and 'The Zone' (aka flow-state). It also provides streams of body data: Head Motion - which is composed of both Gyroscope and Accelerometer data, also available as raw sensor data. All in real-time! Meaning new data points several times a second. This new data can be used to, for example, monitor brain health from home, create adaptive features that enhance applications by making them "smarter" and more user-centric, or during app development to quantitatively a/b test different  experiences.
+The current version of Arctop app provides three unique brain data streams: Focus, Enjoyment, and 'The Zone' (aka flow-state). It also provides streams of body data: Head Motion - which is composed of both Gyroscope and Accelerometer data, also available as raw sensor data. All in real-time! Meaning new data points several times a second. This new data can be used to, for example, monitor brain health from home, create adaptive features that enhance applications by making them "smarter" and more user-centric, or during app development to quantitatively a/b test different  experiences.
 
-In short, Neuos brings a new stream of information direct from brain to computer and it can be used to power all sorts of applications/uses.
+In short, Arctop app brings a new stream of information direct from brain to computer and it can be used to power all sorts of applications/uses.
 
-One way Neuos achieves its high performance analysis is by calibrating itself to each new user. This allows the brain pattern analysis that Neuos performs to be customized and take into account each person's baseline. More information about the calibration is provided in the section [Verify a user is calibrated for Neuos](https://github.com/arctop/Neuos-SDK#verify-a-user-is-calibrated-for-neuos). Calibration is required only one-time for each user and takes approximately 10 minutes to complete.
+One way Arctop achieves its high performance analysis is by calibrating itself to each new user. This allows the brain pattern analysis that we performs to be customized and take into account each person's baseline. More information about the calibration is provided in the section [Verify a user is calibrated for Arctop](https://github.com/arctop/Neuos-SDK#verify-a-user-is-calibrated-for-neuos). Calibration is required only one-time for each user and takes approximately 10 minutes to complete.
 
 # Installation
 
 To add the SDK to your project use **ONE** of the following methods:
 
-1. Use [JitPack](https://jitpack.io/private#arctop/Neuos-SDK) to install the SDK as a dependency with gradle or maven. (Recommended) 
+1. Use [JitPack](https://jitpack.io/private#arctop/android-sdk) to install the SDK as a dependency with gradle or maven. (Recommended) 
 2. Clone the repository locally, and add it as a module into your Android project.
 
 # Package structure
@@ -63,11 +63,11 @@ The SDK contains the following components:
 
 #### Prerequisites
 
-To use the SDK you'll need to install Neuos Cental app on your Android device, to request an invite to the closed beta please fill in the following [form](https://forms.gle/yuAehbx1xEPvpzgPA).
+To use the SDK you'll need to install Arctop app on your Android device, to request an invite to the closed beta please fill in the following [form](https://forms.gle/yuAehbx1xEPvpzgPA).
 
 #### Permissions
 
-Before binding to Neuos and receiving data, you will need to request permissions from the user.
+Before binding to Arctop and receiving data, you will need to request permissions from the user.
 In your *AndroidManifest.XML*, declare that you will be using the NEUOS_DATA permission:
 
     <uses-permission android:name="io.neuos.permission.NEUOS_DATA" />
@@ -79,7 +79,7 @@ Then, at runtime, verify that you have that permission, or request it from the u
 #### Binding to the service
 
 The SDK revolves around a single service entry point that your application will need to bind to.
-Note that Neuos service currently allows only 1 app to connect at a time, so make sure you have only 1 app binding to the SDK at any time.
+Note that Arctop service currently allows only 1 app to connect at a time, so make sure you have only 1 app binding to the SDK at any time.
 
 In order to perform the bind, you will need to declare that your application will query the service package.
 This is done by adding this snippet into your *AndroidManifest.XML*
@@ -165,7 +165,7 @@ More information on bound services can be found in the [Android developer guide]
 
 #### Initialize the SDK with your API key
 
-You need an API Key to use Neuos SDK in your app. To request your API key, email contact@neuos.io with the subject line: "Neuos API Key Request."
+You need an API Key to use Arctop SDK in your app. To request your API key, use the following [form](https://docs.google.com/forms/d/1F-febGJSG5eoHwdvLRapLVCC5TORMpeT8j6Wa0wg0t8).
 
 Once you have your API key and are ready to start working with the service, you will need to initialize it with your API key by calling **initializeNeuos(API_KEY)** method of the service. The service will return a response code letting you know if it successfully initialized or if there is an error.
 
@@ -208,20 +208,20 @@ In case a user is not logged in, launch an intent that will take the user to the
         }
     }
 
-To launch the login page of the Neuos app, start an activity with the following intent:
+To launch the login page of the Arctop app, start an activity with the following intent:
 
     Intent activityIntent = new Intent(NeuosSDK.NEUOS_LOGIN);
 
-The Neuos login activity will report close and report a result once complete.
+The Arctop login activity will report close and report a result once complete.
 You can either listen to that request or check the login status again.
 
-#### Verify a user is calibrated for Neuos
+#### Verify a user is calibrated for Arctop
 
-Before Neuos services can be used in any sessions, a user must complete calibration and have personal Neuos models generated for them. This is done via the Neuos Central app. To calibrate, in the Neuos Central app users will go through a short session:
+Before Arctop services can be used in any sessions, a user must complete calibration and have personal models generated for them. This is done via the Arctop app. To calibrate, in the Arctop app users will go through a short session:
     
 The calibration process is approximately 10 minutes long and asks users to complete six short tasks (1-3 minutes each) while their brain signal is recorded by a compatible headband or other sensor device. At the end of each task users are asked to rank their experience using slider scales and questionairres. 
     
-This process is crucial in order for Neuos to learn individual users and adjust its algorithms to be as accurate and robust as possible. Therefore, it is important that users complete this session while they are in a quiet place, with no disruptions, and making sure the headband is positioned properly.
+This process is crucial in order for Arctop platform to learn individual users and adjust its algorithms to be as accurate and robust as possible. Therefore, it is important that users complete this session while they are in a quiet place, with no disruptions, and making sure the headband is positioned properly.
 
 It is best practice that during the calibration tasks each user focuses on the screen as much as they can and do not close their eyes. It is OK to blink normally but otherwise they should try not to make unnecessary movements during the tasks since the headband is very sensitive to motion. Other guidance given for the calibration session includes:
     -Do NOT eat or drink.
@@ -239,9 +239,9 @@ In case the user is not calibrated, launch an intent to send the user into the c
     activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(activityIntent)
 
-#### Connect to a Neuos sensor device 
+#### Connect to a Arctop sensor device 
 
-Connecting to a Neuos sensor device, for example a headband, is accomplished by calling **connectSensorDevice(String macAddress)** 
+Connecting to a Arctop sensor device, for example a headband, is accomplished by calling **connectSensorDevice(String macAddress)** 
 Available in the SDK is the PairingActivity class, which handles scanning and extracting the device's MAC address using builtin CompanionDeviceManager. You can launch the activity using the following code
     
     Intent activityIntent = new Intent(NeuosSDK.NEUOS_PAIR_DEVICE);
@@ -292,7 +292,7 @@ Add properties for the screen to verify
     activityIntent.putExtra(NeuosQAProperties.TASK_PROPERTIES ,
                 new NeuosQAProperties(NeuosQAProperties.Quality.Good , NeuosQAProperties.INFINITE_TIMEOUT));
 
-The [NeuosQAProperties](neuosSDK/src/main/java/io/neuos/NeuosQAProperties.kt) class contains further explanation on different settings you can use to define your user's QA experience.
+The [QAProperties](neuosSDK/src/main/java/io/neuos/NeuosQAProperties.kt) class contains further explanation on different settings you can use to define your user's QA experience.
 
 Optionally, you can add a flag to run the screen in debug mode. This is helpful when developing your apps. 
 It provides 2 features that aren't available in a release setting:
@@ -333,7 +333,7 @@ You can use the **INeuosSessionUploadListener** interface to monitor the progres
 
 #### Shutdown the SDK
 
-Call **shutdownSdk()** to have Neuos release all of its resources.
+Call **shutdownSdk()** to have Arctop release all of its resources.
 
 #### Unbind from the service
 
@@ -341,6 +341,6 @@ Once the SDK is shutdown, you can safely unbind from the service.
 
 # Using the SDK with a non Android Client
 
-Neuos™ provides a LAN webserver that allows non Android clients access to the SDK data. For more info see [Stream Server Docs](Neuos-Stream.md).
+Arctop app provides a LAN webserver that allows non Android clients access to the SDK data. For more info see [Stream Server Docs](Arctop-Stream.md).
 
 It is highly recomended to first read through this documentation to have a better understanding of the SDK before trying to work with the stream server.
