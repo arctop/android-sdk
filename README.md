@@ -1,16 +1,16 @@
-# Arctop Native Android SDK (Software Development Kit)
+# Arctop Native Android Software Development Kit (SDK)
 
-The Arctop SDK repository contains everything you need to connect your application to Arctop services. 
+The Arctop SDK repository contains everything you need to connect your application to Arctop's services. 
 
 # Background
 
-Arctop platform is a noninvasive neural interface technology that is the fruit of deep R&D performed by Arctop Inc. It is fully working, developed, and comes out of proven research — a reference you may find helpful is a peer-reviewed article in Frontiers in Computational Neuroscience where Arctop SDK was used for a personalized audio application: https://www.frontiersin.org/articles/10.3389/fncom.2021.760561/full
+The Arctop SDK is a noninvasive neural interface technology that is the result of deep R&D performed by Arctop, Inc. It is fully functional, developed, and comes from proven research. A reference you may find helpful is this peer-reviewed article in Frontiers in Computational Neuroscience in which the Arctop SDK was used for a personalized audio application: https://www.frontiersin.org/articles/10.3389/fncom.2021.760561/full.
 
-The current version of Arctop app provides three unique brain data streams: Focus, Enjoyment, and 'The Zone' (aka flow-state). It also provides streams of body data: Head Motion - which is composed of both Gyroscope and Accelerometer data, also available as raw sensor data. All in real-time! Meaning new data points several times a second. This new data can be used to, for example, monitor brain health from home, create adaptive features that enhance applications by making them "smarter" and more user-centric, or during app development to quantitatively a/b test different  experiences.
+The current version of the Arctop SDK provides two unique cognition data streams: focus and enjoyment. It also provides body data streams including blinks, heart rate, and heart rate variability. All data streams are provided in real-time, meaning you’ll receive new data points several times per second. 
 
-In short, Arctop app brings a new stream of information direct from brain to computer and it can be used to power all sorts of applications/uses.
+In short, Arctop brings new streams of personalized brain data directly to you, enabling endless creative development with real-time metrics. Examples of how this data can be used include: creating personally adaptive games and training scenarios for more immersive user experiences, enabling new modes of communication and accessibility features, gaining play-by-play insights into how users respond to your product, and tracking personal brain health measurements from home.
 
-One way Arctop achieves its high performance analysis is by calibrating itself to each new user. This allows the brain pattern analysis that we performs to be customized and take into account each person's baseline. More information about the calibration is provided in the section [Verify a user is calibrated for Arctop](https://github.com/arctop/android-sdk#verify-a-user-is-calibrated-for-arctop). Calibration is required only one-time for each user and takes approximately 10 minutes to complete.
+One way Arctop achieves its high performance analysis is by calibrating itself to each new user. This allows our models to be individually customized to your unique brain data baseline and ensure we can deliver personalized data. To unlock your personalized model, you’ll complete a one-time 10-minute calibration, consisting of a series of tasks and questions in the Arctop mobile app. After this one-time calibration, your baseline will be set to provide you with real-time cognition metrics for endless usage. For more information about calibration, see the section titled: [Verify a User is Calibrated for Arctop](https://github.com/arctop/android-sdk#verify-a-user-is-calibrated-for-arctop). 
 
 # Installation
 
@@ -19,7 +19,7 @@ To add the SDK to your project use **ONE** of the following methods:
 1. Use [JitPack](https://jitpack.io/private#arctop/android-sdk) to install the SDK as a dependency with gradle or maven. (Recommended) 
 2. Clone the repository locally, and add it as a module into your Android project.
 
-# Package structure
+# Package Structure
 
 The SDK contains the following components:
 
@@ -34,36 +34,38 @@ The SDK contains the following components:
 # Workflow
 
 > **_NOTE:_**  The SDK is designed to work in a specific flow. 
-> The setup phase needs to be done once as long as your application is running. The session phase can be done multiple times.
+> The Setup Phase only needs to be done once, as long as your application is running. The Session Phase can be done multiple times.
 
 ## Setup Phase
 
 1. [Prerequisites](#prerequisites)
 2. [Permissions](#permissions)
-3. [Bind to service](#binding-to-the-service)
-4. [Initialize the SDK with your API key](#initialize-the-sdk-with-your-api-key)
-5. [Register for callbacks](#register-for-callbacks)
+3. [Bind to Service](#binding-to-the-service)
+4. [Initialize the SDK with Your API Key](#initialize-the-sdk-with-your-api-key)
+5. [Register for Callbacks](#register-for-callbacks)
 
 ## Session Phase
 
-1. [Verify that a user is logged in](#verify-a-user-is-logged-in)
-2. [Verify that a user has been calibrated for Arctop](#verify-a-user-is-calibrated-for-arctop)
-3. [Connect to a Arctop sensor device](#connect-to-a-arctop-sensor-device)
-4. [Verify Signal Quality of device](#verify-signal-quality-of-device)
-5. [Begin a session](#begin-a-session)
-6. [Work with session data](#work-with-session-data)
-7. [Finish session](#finish-session)
+1. [Verify That a User is Logged In](#verify-a-user-is-logged-in)
+2. [Verify That a User Has Been Calibrated for Arctop](#verify-a-user-is-calibrated-for-arctop)
+3. [Connect to an Arctop Sensor Device](#connect-to-an-arctop-sensor-device)
+4. [Verify Signal Quality of Device](#verify-signal-quality-of-device)
+5. [Begin a Session](#begin-a-session)
+6. [Work With Session Data](#work-with-session-data)
+7. [Finish Session](#finish-session)
 
 ## Cleanup
 
 1. [Shutdown the SDK](#shutdown-the-sdk)
-2. [Unbind from the service](#unbind-from-the-service)
+2. [Unbind From the Service](#unbind-from-the-service)
 
 ### Setup Phase
 
 #### Prerequisites
 
-To use the SDK you'll need to install Arctop app on your Android device, to request an invite to the closed beta please fill in the following [form](https://forms.gle/yuAehbx1xEPvpzgPA).
+To use the Arctop SDK, you'll need to install the Arctop mobile app on your mobile device. The Arctop app is available on both the App Store (iOS) and Google Play (Android) and can be found by searching for "Arctop".  
+
+After downloading the mobile app, use the “Sign Up” screen to create an account. Follow instructions in the “Supplementary User Instructions'' document provided to you for guidance on how to set up and use the mobile app for Arctop Streaming.  
 
 #### Permissions
 
@@ -72,14 +74,14 @@ In your *AndroidManifest.XML*, declare that you will be using the NEUOS_DATA per
 
     <uses-permission android:name="io.neuos.permission.NEUOS_DATA" />
 
-Then, at runtime, verify that you have that permission, or request it from the user, as per:
+Then, at runtime, verify that you have that permission or request it from the user, as described in this section:
 
-[Requesting runtime permissions reference in Android developer guide](https://developer.android.com/training/permissions/requesting)
+[Requesting Runtime Permissions Reference in Android Developer Guide](https://developer.android.com/training/permissions/requesting)
 
-#### Binding to the service
+#### Binding to the Service
 
 The SDK revolves around a single service entry point that your application will need to bind to.
-Note that Arctop service currently allows only 1 app to connect at a time, so make sure you have only 1 app binding to the SDK at any time.
+Note that Arctop's service currently allows only 1 app to connect at a time, so make sure you have only 1 app binding to the SDK at any time.
 
 In order to perform the bind, you will need to declare that your application will query the service package.
 This is done by adding this snippet into your *AndroidManifest.XML*
@@ -88,9 +90,9 @@ This is done by adding this snippet into your *AndroidManifest.XML*
         <package android:name="io.neuos.central" />
     </queries>
 
-[Query element reference in Android developer guide](https://developer.android.com/guide/topics/manifest/queries-element)
+[Query Element Reference in Android Geveloper Guide](https://developer.android.com/guide/topics/manifest/queries-element)
 
-Then, in your code, locate the service, and perform the binding
+Then, in your code, locate the service, and perform the binding.
 
     void doBindService() {
         try {
@@ -161,15 +163,15 @@ Your application will also need to create a ServiceConnection class that will ha
         }
     };
 
-More information on bound services can be found in the [Android developer guide](https://developer.android.com/guide/components/bound-services)
+More information on bound services can be found in the [Android Developer Guide](https://developer.android.com/guide/components/bound-services)
 
-#### Initialize the SDK with your API key
+#### Initialize the SDK with Your API Key
 
-You need an API Key to use Arctop SDK in your app. To request your API key, use the following [form](https://docs.google.com/forms/d/1F-febGJSG5eoHwdvLRapLVCC5TORMpeT8j6Wa0wg0t8).
+In order to use the Arctop SDK with your app, you will need to create an API key. To do so, please submit a request via the Arctop DevKit form provided to you in the “Welcome” email. Feel free to contact support@arctop.com with any questions you may have.
 
 Once you have your API key and are ready to start working with the service, you will need to initialize it with your API key by calling **initializeNeuos(API_KEY)** method of the service. The service will return a response code letting you know if it successfully initialized or if there is an error.
 
-#### Register for callbacks
+#### Register for Callbacks
 
 The service runs in its own process and not the calling application process, so some of the calls inside INeuosSdk.aidl are defined as *oneway*. This effectively creates an asynchronous call into the service process which returns immediately. The service reports results via the INeuosSdkListener.aidl interface.
 
@@ -189,11 +191,11 @@ Implementing the interface is as simple as creating a private class deriving fro
 
 ### Session Phase
 
-#### Verify a user is logged in 
+#### Verify a User is Logged In 
 
-After successful initialization, your first step is to verify a user is logged into the Neuos Central application.
+After successful initialization, your first step is to verify a user is logged into the Arctop mobile application.
 You can query the service to get the logged in status of a user.
-In case a user is not logged in, launch an intent that will take the user to the login / register screen of the Neuos Central app.
+In case a user is not logged in, launch an intent that will take the user to the Log In / Sign Up screen of the Arctop mobile app.
 
     int status = mService.getUserLoginStatus();
     switch (status){
@@ -208,26 +210,37 @@ In case a user is not logged in, launch an intent that will take the user to the
         }
     }
 
-To launch the login page of the Arctop app, start an activity with the following intent:
+To launch the login screen of the Arctop app, start an activity with the following intent:
 
     Intent activityIntent = new Intent(NeuosSDK.NEUOS_LOGIN);
 
 The Arctop login activity will report close and report a result once complete.
 You can either listen to that request or check the login status again.
 
-#### Verify a user is calibrated for Arctop
+#### Verify a User is Calibrated for Arctop
 
-Before Arctop services can be used in any sessions, a user must complete calibration and have personal models generated for them. This is done via the Arctop app. To calibrate, in the Arctop app users will go through a short session:
-    
-The calibration process is approximately 10 minutes long and asks users to complete six short tasks (1-3 minutes each) while their brain signal is recorded by a compatible headband or other sensor device. At the end of each task users are asked to rank their experience using slider scales and questionairres. 
-    
-This process is crucial in order for Arctop platform to learn individual users and adjust its algorithms to be as accurate and robust as possible. Therefore, it is important that users complete this session while they are in a quiet place, with no disruptions, and making sure the headband is positioned properly.
+Before Arctop services can be used in any sessions, a user must complete calibration to generate their personal Arctop model. This is done via the Arctop mobile app. 
 
-It is best practice that during the calibration tasks each user focuses on the screen as much as they can and do not close their eyes. It is OK to blink normally but otherwise they should try not to make unnecessary movements during the tasks since the headband is very sensitive to motion. Other guidance given for the calibration session includes:
-    -Do NOT eat or drink.
-    -Do NOT plug in the headband or connect it to any battery while wearing it
-    -Do NOT press the tablet’s ‘sleep’ button.
-    -Answer questions honestly: the session is designed to calibrate the software to each person so there are no “right” or “wrong” answers.
+Calibration in the Arctop mobile app will be approximately 10 minutes long and only needs to be completed once per user. It consists of five short tasks (1-3 minutes each) and is performed while wearing a compatible headwear device to record brain signals throughout. At the end of each task, users are asked to rank their experience using slider scales and short questionnaires. 
+    
+This process is important for Arctop’s software to learn individual users' unique patterns and tune its algorithms to be as accurate and robust as possible. 
+
+Users should follow the tips listed below for best practice in completing calibration.
+
+*Before calibration:*
+
+-Ensure you are in a quiet area, where you will not be interrupted for 10 minutes.
+
+-Unplug your headwear and mobile device from any chargers.
+
+*During calibration:*
+
+-Sit still, as the headwear sensors are sensitive to motion. Do not eat, drink, or close your eyes. It is alright to blink normally.
+
+-Do not multitask or exit the Arctop app. Focus all of your efforts on the tasks presented.
+
+-Answer all questions honestly.
+
 
 To verify that a user is calibrated, call the service to check the status:
     
@@ -239,10 +252,10 @@ In case the user is not calibrated, launch an intent to send the user into the c
     activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(activityIntent)
 
-#### Connect to a Arctop sensor device 
+#### Connect to an Arctop Sensor Device 
 
-Connecting to a Arctop sensor device, for example a headband, is accomplished by calling **connectSensorDevice(String macAddress)** 
-Available in the SDK is the PairingActivity class, which handles scanning and extracting the device's MAC address using builtin CompanionDeviceManager. You can launch the activity using the following code
+Connecting to an Arctop sensor device, such as the headwear provided, is accomplished by calling **connectSensorDevice(String macAddress)** .
+Available in the SDK is the PairingActivity class, which handles scanning and extracting the device's MAC address using builtin CompanionDeviceManager. You can launch the activity using the following code.
     
     Intent activityIntent = new Intent(NeuosSDK.NEUOS_PAIR_DEVICE);
 
@@ -268,26 +281,26 @@ Before launching the activity you will need to register for the broadcast.
         registerReceiver(devicePairingBroadcastReceiver,
                 new IntentFilter(NeuosSDK.IO_NEUOS_DEVICE_PAIRING_ACTION));
 
-The call to **connectSensorDevice(String macAddress)** will initiate a series of callbacks to **onConnectionChanged(int previousConnection ,int currentConnection)**
+The call to **connectSensorDevice(String macAddress)** will initiate a series of callbacks to **onConnectionChanged(int previousConnection ,int currentConnection)** .
 
 The values for *previousConnection* and *currentConnection* are defined in the NeuosSDK.java class.
 Once the value of *currentConnection* == NeuosSDK.ConnectionState.CONNECTED , you may begin a session. 
 
-#### Verify Signal Quality of device
+#### Verify Signal Quality of Device
 
-Once the device is connected you should verify that the user it is receiving proper signal. 
-The easiest way is to launch the QA activity bundled along with the app. This frees you from implementing your own version, and provides constants that are verified before the activity returns its result.
-The screen also verifies that the user isn't actively charging their device, which creates noise in the signal readings. 
+Once the device is connected, you should verify that the user's headwear is receiving the proper signal. 
+The easiest way to verify this is to launch the in-app QA activity on the mobile device being used. This frees you from implementing your own version, and provides constants that are verified before the activity returns its result.
+The QA screen in the mobile app also verifies that the user isn't actively charging their device, which would create noise in the signal readings. 
 
 Create an intent to launch the screen:
 
     Intent activityIntent = new Intent(NeuosSDK.NEUOS_QA_SCREEN);
     
-Add extras into the intent to denote you want it to be stand alone (required, or it won't work)
+Add extras into the intent to denote you want it to be stand alone (required, or it won't work).
     
     activityIntent.putExtra(NeuosQAProperties.STAND_ALONE , true);
     
-Add properties for the screen to verify
+Add properties for the screen to verify.
 
     activityIntent.putExtra(NeuosQAProperties.TASK_PROPERTIES ,
                 new NeuosQAProperties(NeuosQAProperties.Quality.Good , NeuosQAProperties.INFINITE_TIMEOUT));
@@ -297,8 +310,8 @@ The [QAProperties](neuosSDK/src/main/java/io/neuos/NeuosQAProperties.kt) class c
 Optionally, you can add a flag to run the screen in debug mode. This is helpful when developing your apps. 
 It provides 2 features that aren't available in a release setting:
 
-1. There will be a "continue" button at the bottom of the screen, allowing you to simulate successful QA.
-2. Once you dismiss the "please unplug your device" dialog, it will not show up again, and you can continue working with the device connected.
+1. There will be a "Continue" button at the bottom of the screen, allowing you to simulate successful QA.
+2. Once you dismiss the "Please unplug your device." dialog, it will not show up again, and you can continue working with the device connected.
 
 Adding the flag is done as follows:
 
@@ -307,27 +320,27 @@ Adding the flag is done as follows:
                 
 The activity will call finish() with either RESULT_OK or RESULT_CANCELED, which you can use to determine your next steps.
 
-#### Begin a session
+#### Begin a Session
 
-For a calibrated user, call **startPredictionSession(String predictionName)** to begin running the Neuos real-time prediction service.
-You can find the predictions in **NeuosSDK.Predictions**
+For a calibrated user, call **startPredictionSession(String predictionName)** to begin running the Arctop real-time prediction service.
+You can find the predictions in **NeuosSDK.Predictions** .
 
-#### Work with session data
+#### Work with Session Data
 
 At this point, your app will receive results via the **onValueChanged(String key,float value)** callback. 
 
-Results are given in the form of values from 0-100 for Focus, Enjoyment, and The Zone. The neutral point for each user is at 50, meaning that values above 50 reflect high levels of the measured quantity, for example a 76 in Focus is a high level of Focus, a 99 in The Zone is a near perfect "flow state." Values below 50 represent the opposite, meaning lack of focus or lack of enjoyment. For example a 32 in Focus is a low level that reflects the user not paying attention, a 12 in Enjoyment means the user really dislikes whatever is happening. Low Zone levels reflect being distracted or generally not immersed in an experience.
+Results are given in the form of values from 0-100 for focus and enjoyment. The neutral point for each user is at 50, meaning that values above 50 reflect high levels of the measured quantity. For example, a 76 in focus is a high level of focus, while a 99 is  nearly the highest focus that can be achieved. Values below 50 represent the opposite, meaning lack of focus or lack of enjoyment. For example, a 32 in focus is a lower level that reflects the user may not be paying much attention, while a 12 in enjoyment can mean the user dislikes the current experience.
 
-For Head Motion the value is given in steps from 1-4 where 1 is static i.e. the user is not moving their head at all, while 4 is active, i.e. the user is moving their head a lot. 4 is a near constant movement of the head while 1 is essentially no movement, 2 and 3 are somewhere in between with 2 being a lower amount of movement than 3. 
+Blink data is recorded as a binary. The presence of a blink will be indicated by a “1” in that column. Blink data for each individual eye will be provided in a future addition to the dataset. 
 
-Values of -1 or NaNs should be ignored as these reflect low confidence periods of analysis. This can occur for any reason, including a momentary lapse in sensor connection or a brain response that is anomalous. Neuos is strict and always prefers to say "I don't know" with a -1 or NaN rather than imply that it knows by giving a value which has a high chance of being inaccurate. If you notice an excess of -1s or NaNs in your data please contact Arctop for support as these values should occur only very limitedly.
+Arctop’s SDK is strict and always prefers to say "I don't know", producing a -1 or NaN value, rather than providing a value that may be inaccurate. Values of -1 or NaNs should be ignored as these reflect low confidence periods of analysis. This can occur for any reason, including a momentary lapse in sensor connection or a brain response that is anomalous. If you notice an excess of -1s or NaNs in your data, please contact Arctop for support as these values should occur on a limited basis.
 
-Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback. If QA failed during the analysis window, the **passed** parameter will be false, and the type of failure will be reported in **type**. Valid types aredefined in **QAFailureType** class inside [NeuosSDK.java](neuosSDK/src/main/java/io/neuos/NeuosSDK.java).
+Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback. If QA failed during the analysis window, the **passed** parameter will be false, and the type of failure will be reported in **type**. Valid types are defined in **QAFailureType** class inside [NeuosSDK.java](neuosSDK/src/main/java/io/neuos/NeuosSDK.java).
 
-#### Finish session
+#### Finish Session
 
 When you are ready to complete the session, call **finishSession()**. The session will close and notify your app when done via **onSessionComplete()** callback.
-You can use the **INeuosSessionUploadListener** interface to monitor the progress of uploading the session to the Neuos server. (Optional)
+You can use the **INeuosSessionUploadListener** interface to monitor the progress of uploading the session to the Arctop server. (Optional)
 
 ### Cleanup
 
@@ -335,12 +348,12 @@ You can use the **INeuosSessionUploadListener** interface to monitor the progres
 
 Call **shutdownSdk()** to have Arctop release all of its resources.
 
-#### Unbind from the service
+#### Unbind From the Service
 
 Once the SDK is shutdown, you can safely unbind from the service.
 
-# Using the SDK with a non Android Client
+# Using the SDK with a Non-Android Client
 
-Arctop app provides a LAN webserver that allows non Android clients access to the SDK data. For more info see [Stream Server Docs](Arctop-Stream.md).
+Arctop provides a LAN webserver that allows non-Android clients access to the SDK data. For more info see [Stream Server Docs](Arctop-Stream.md).
 
 It is highly recomended to first read through this documentation to have a better understanding of the SDK before trying to work with the stream server.
