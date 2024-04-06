@@ -3,6 +3,7 @@ package com.arctop;
 import com.arctop.IArctopSdkListener;
 import com.arctop.IArctopQAListener;
 import com.arctop.IArctopSessionUploadListener;
+import com.arctop.IArctopDeviceListener;
 
 interface IArctopSdk {
 
@@ -12,7 +13,20 @@ interface IArctopSdk {
     * Users of SDK NEVER need to call this function.
     */
     int startCalibrationSession(in String sessionId);
-
+    /**
+    * Internal function. Used for google testing only
+    */
+    void selectBtListener(in String userId);
+    /**
+    * Begins a scan of devices compatible with the SDK
+    * Normally wrapped by PairingActivity and doesn't need to be called from outside
+    */
+    void startScanningForDevices();
+    /**
+    * Stops an ongoing scan of devices compatible with the SDK
+    * Normally wrapped by PairingActivity and doesn't need to be called from outside
+    */
+    void stopScanningForDevices();
     /**
     * Initializes the SDK for usage
     * @param apiKey the client's api key to validate usage
@@ -117,6 +131,17 @@ interface IArctopSdk {
     * @param listener IArctopQAListener implementation
     */
     void unregisterUploadCallback(IArctopSessionUploadListener listener);
+    /**
+    * Registers for Device list callbacks
+    * @param listener IArctopDeviceListener implementation
+    * @return int value from {@link ArctopSDK#ResponseCodes}
+    */
+    int registerDeviceListCallback(IArctopDeviceListener listener);
+    /**
+    * Unregisters for Upload callbacks
+    * @param listener IArctopQAListener implementation
+    */
+    void unregisterDeviceListCallback(IArctopDeviceListener listener);
     /**
     * Attempts to re-upload last session in case it failed.
     */
