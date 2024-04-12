@@ -79,6 +79,8 @@ public final class ArctopSDK {
     public static final class Predictions {
         public static final String ZONE = "zone";
         public static final String GAME = "game_zone";
+
+        public static final String SLEEP = "sleep";
     }
 
     /**
