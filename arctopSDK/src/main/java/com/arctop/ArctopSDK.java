@@ -26,6 +26,7 @@ public final class ArctopSDK {
      **/
 
     public static final class ResponseCodes {
+        public static final int UNKNOWN_ERROR = -2;
         public static final int NOT_ALLOWED = -1;
         public static final int SUCCESS = 0;
         public static final int NOT_INITIALIZED = 1;
