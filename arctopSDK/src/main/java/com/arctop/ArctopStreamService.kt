@@ -1,10 +1,10 @@
-package io.neuos
-object NeuosStreamService {
+package com.arctop
+object ArctopStreamService {
     /**
      * General Constants
      * */
     // Name of broadcasting service on the local network
-    const val SERVICE_NAME = "NeuosService"
+    const val SERVICE_NAME = "ArctopService"
     // Service type / protocol for network discovery
     const val SERVICE_TYPE = "_http._tcp"
 

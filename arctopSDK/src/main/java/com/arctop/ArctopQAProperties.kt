@@ -1,4 +1,4 @@
-package io.neuos
+package com.arctop
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
  * Otherwise RESULT_OK will return
  */
 @Parcelize
-data class NeuosQAProperties(
+data class ArctopQAProperties(
         val quality:Quality,
         val maxTimeout:Float = INFINITE_TIMEOUT
 
