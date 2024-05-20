@@ -25,14 +25,14 @@ Those bytes should then be converted to a UTF8 string, that will contain the JSO
 Every command that is sent between the server and the client follows the same structure.
 
 1. A mandatory *command* field, describing the type of command.
-2. Optional values defined per command (see [ArctopStreamService.kt](arctopSDK/src/main/java/io/arctop/ArctopStreamService.kt))
+2. Optional values defined per command (see [ArctopStreamService.kt](arctopSDK/src/main/java/com/arctop/ArctopStreamService.kt))
 3. Timestamp ( only available within commands sent as part of the stream ) as a long int (Unix MS)
 
 an example of an object notifying the client of a new value received for enjoyment:
 ```JSON
     {"command" : "valueChange" , "timestamp" : 123612321 , "key" : "enjoyment" , "value" : 33.4442}
 ```
-All the available commands, values, and object key are listed in the [ArctopStreamService.kt](ArctopSDK/src/main/java/io/arctop/ArctopStreamService.kt) file.
+All the available commands, values, and object key are listed in the [ArctopStreamService.kt](arctopSDK/src/main/java/com/arctop/ArctopStreamService.kt) file.
 
 ## Connection flow
 
@@ -59,7 +59,7 @@ Once the server starts streaming commands, you should read the stream to extract
 As described in [Stream data structure](#stream-data-structure), before each message the server writes an unsigned short (16 bit uint) into the stream to let the client know the size of the next message in bytes.
 This allows the client to read messages fully, and convert into a string/JSON for processing.
 
-For a better understanding of commands, values, and constants, please review the [ArctopSDK.java](arctopSDK/src/main/java/io/arctop/ArctopSDK.java) and [IArctopSdkListener.aidl](arctopSDK/src/main/aidl/io/arctop/IArctopSdkListener.aidl) files.
+For a better understanding of commands, values, and constants, please review the [ArctopSDK.java](arctopSDK/src/main/java/com/arctop/ArctopSDK.java) and [IArctopSdkListener.aidl](arctopSDK/src/main/aidl/com/arctop/IArctopSdkListener.aidl) files.
 
 ### Session complete
 
