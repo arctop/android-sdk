@@ -16,7 +16,7 @@ One way Arctop achieves its high performance analysis is by calibrating itself t
 
 To add the SDK to your project use **ONE** of the following methods:
 
-1. Use [JitPack](https://jitpack.io/private#arctop/Arctop-SDK) to install the SDK as a dependency with gradle or maven. (Recommended) 
+1. Use [JitPack](https://jitpack.io/private#arctop/android-sdk) to install the SDK as a dependency with gradle or maven. (Recommended) 
 2. Clone the repository locally, and add it as a module into your Android project.
 
 # Package structure
