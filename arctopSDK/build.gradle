@@ -45,7 +45,7 @@ publishing {
         release(MavenPublication) {
             groupId = 'com.arctop'
             artifactId = 'android-sdk'
-            version = '1.0.3'
+            version = '1.0.5'
 
             afterEvaluate {
                 from components.release
