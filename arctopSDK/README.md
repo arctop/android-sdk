@@ -165,8 +165,7 @@ More information on bound services can be found in the [Android developer guide]
 
 #### Initialize the SDK with your API key
 
-You need an API Key to use Arctop SDK in your app. To request your API key, email contact@arctop.io with the subject line: "Arctop API Key Request."
-
+You need an API Key to use Arctop SDK in your app (see [prerequisites](https://github.com/arctop/android-sdk/blob/main/arctopSDK/README.md#prerequisites)).
 Once you have your API key and are ready to start working with the service, you will need to initialize it with your API key by calling **initializeArctop(API_KEY)** method of the service. The service will return a response code letting you know if it successfully initialized or if there is an error.
 
 #### Register for callbacks
