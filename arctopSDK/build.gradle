@@ -2,7 +2,6 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-parcelize'
-    id 'maven-publish'
 }
 
 
@@ -38,18 +37,4 @@ android {
 dependencies {
     //sentry
     implementation 'io.sentry:sentry-android:5.6.0'
-}
-
-publishing {
-    publications {
-        release(MavenPublication) {
-            groupId = 'com.arctop'
-            artifactId = 'android-sdk'
-            version = '1.0.5'
-
-            afterEvaluate {
-                from components.release
-            }
-        }
-    }
 }
