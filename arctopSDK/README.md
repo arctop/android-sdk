@@ -30,7 +30,7 @@ After the one-time calibration, real-time cognition metrics for endless usage ar
 <details>
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
 
-    To add the SDK to your project use **ONE** of the following methods:
+To add the SDK to your project use **ONE** of the following methods:
 
 1. Use [JitPack](https://jitpack.io/private#arctop/android-sdk) to install the SDK as a dependency with gradle or maven. (Recommended) 
 2. Clone the repository locally, and add it as a module into your Android project.
@@ -40,7 +40,7 @@ After the one-time calibration, real-time cognition metrics for endless usage ar
 <details>
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iOS</summary>
 
-Add the current project as a swift package dependency to your own project.
+Add the current project as a Swift package dependency to your own project.
     
 </details>
 
@@ -50,9 +50,9 @@ The SDK contains the following components.
 <details>
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
     
-* The _ArctopSDK.java_ class with all constants used to communicate with your application.
+* The _ArctopSDK.java_ class with all constants used to communicate with your application
   
-* A set of AIDL files, which define the interface of communication with the service.
+* A set of AIDL files, which define the interface of communication with the service:
   * _IArctopSdk.aidl_ provides the public service API accessible by your app.
   * _IArctopSdkListener.aidl_ defines the callback interface by which the service provides responses and notifications back to your app.
   * _IArctopQAListener.aidl_ defines a callback interface that provides QA values from the sensor device to your app.
@@ -64,7 +64,7 @@ The SDK contains the following components.
 
 * The _ArctopSDKClient_ class is the main entry point to communicate with the SDK. You should create an instance in your application and hold on to it for the duration of the app's lifecycle.
     
-* A set of listener protocols that define the interface of communication.
+* A set of listener protocols that define the interface of communication:
   * _ArctopSdkListener_ defines the callback interface by which the SDK provides responses and notifications back to your app.
   * _ArctopQAListener_ defines a callback interface that provides QA values from the sensor device to your app.
   * _ArctopSessionUploadListener_ defines a callback interface that provides session upload monitoring.
@@ -74,7 +74,7 @@ The SDK contains the following components.
 ## Workflow
 
 > **_GENERAL NOTE:_**  The SDK is designed to work in a specific flow. 
-> The setup phase needs to be done once as long as your application is running. The session phase can be done multiple times.
+> The Setup Phase only needs to be done once, as long as your application is running. The Session Phase can be done multiple times.
 
 >**_NOTE FOR iOS:_** The SDK is designed to work with the async / await model for asynchronous operations.
 
@@ -111,10 +111,10 @@ The SDK contains the following components.
 ###### Mobile App
 To use the Arctop SDK, you'll need to install the Arctop  app on your mobile device. The Arctop app is available on both the App Store (iOS) and Google Play (Android) and can be found by searching "Arctop".
 
-After downloading the mobile app, use the “Sign Up” screen to create an account. Follow instructions in the “Supplementary User Instructions" document provided to you for guidance on how to set up and use the mobile app for Arctop streaming.  
+After downloading the mobile app, use the Sign Up screen to create an account. Follow instructions in the _Supplementary User Instructions_ document provided to you via email for guidance on how to set up and use the mobile app for Arctop streaming.  
 
 ###### API Key
-You will also need to create an API key in order to use the Arctop SDK with your app. To do so, please submit a request via the Arctop DevKit form provided to you in the “Welcome” email. Feel free to [contact us](support@arctop.com) with any questions you may have.
+You will also need to create an API key in order to use the Arctop SDK with your app. To do so, please submit a request via the Arctop DevKit form provided to you in the “Welcome” email. Feel free to contact us at support@arctop.com with any questions you may have.
 
 #### 2. Permissions (Android Only)
 
@@ -122,7 +122,7 @@ You will also need to create an API key in order to use the Arctop SDK with your
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
     
 Before binding to Arctop and receiving data, you will need to request permissions from the user.
-In your AndroidManifest.XML, declare that you will be using the ARCTOP_DATA permission:
+In your _AndroidManifest.XML_, declare that you will be using the ARCTOP_DATA permission:
     
         <uses-permission android:name="com.arctop.permission.ARCTOP_DATA" />
     
@@ -188,7 +188,7 @@ Then, in your code, locate the service, and perform the binding.
             }
         }
 
-Your application will also need to create a ServiceConnection class that will handle connection and disconnection responses.
+Your application will also need to create a _ServiceConnection_ class that will handle connection and disconnection responses.
     
         private ServiceConnection mConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName className,
@@ -219,12 +219,12 @@ Your application will also need to create a ServiceConnection class that will ha
             }
         };
     
-More information on bound services can be found in the [Android Developer Guide](https://developer.android.com/guide/components/bound-services)
+More information on bound services can be found in the [Android Developer Guide](https://developer.android.com/guide/components/bound-services).
 </details>
 
 #### 4. Initialize the SDK With Your API Key
 
-You need an API Key to use the Arctop SDK in your app (see [Prerequisites](#1-prerequisites)). Once you have your API key and are ready to start working with the service, you will need to initialize the SDK.
+You need an API key to use the Arctop SDK in your app (see [Prerequisites](#1-prerequisites)). Once you have your API key and are ready to start working with the service, you will need to initialize the SDK.
 
 <details>
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
@@ -243,14 +243,14 @@ This can be done with your API key by calling **initializeArctop(apiKey:String ,
 <details>
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
     
-The service runs in its own process and not the calling application process, so some of the calls inside IArctopSdk.aidl are defined as _oneway_. This effectively creates an asynchronous call into the service process which returns immediately. The service reports results via the IArctopSdkListener.aidl interface.
+The service runs in its own process and not the calling application process, so some of the calls inside _IArctopSdk.aidl_ are defined as _oneway_. This effectively creates an asynchronous call into the service process which returns immediately. The service reports results via the _IArctopSdkListener.aidl_ interface.
     
 The **onSdkError(int errorCode, String message)** call is available for reporting errors back to the calling application. 
     
 For more information on the AIDL interface, and calling IPC methods, visit the [Android Developer Guide](https://developer.android.com/guide/components/aidl#Calling).
 
     
-The callback interface is defined in [IArctopSdkListener.aidl](arctopSDK/src/main/aidl/io/arctop/IArctopSdkListener.aidl).
+The callback interface is defined in [_IArctopSdkListener.aidl_](https://github.com/arctop/android-sdk/blob/25fdc767f6f9ca0b1f5d33a6515bc7f954267566/arctopSDK/src/main/aidl/com/arctop/IArctopSdkListener.aidl).
     
 Note that this entire interface is defined as _oneway_ as all calls from the service work via a messaging thread, and do not wait for the listener to perform any actions before returning and notifying the next listener in line.
     
@@ -327,7 +327,7 @@ Calibration takes approximately 10 minutes and only needs to be completed once p
 
 This process is important for Arctop’s software to learn individual users' unique patterns and tune its algorithms to be as accurate and robust as possible. 
 
-The best practices users should follow in completing calibration are:
+The best practices users should follow in completing calibration are listed below.
 * Before starting the calibration session:
     * Go to a quiet place where you will not be interrupted for 10 minutes.
     * Unplug your headwear and mobile device from any chargers.
@@ -341,7 +341,7 @@ The best practices users should follow in completing calibration are:
 <details>
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
     
-    To verify that a user is calibrated, call the service to check the status:
+To verify that a user is calibrated, call the service to check the status:
         
         mService.checkUserCalibrationStatus();
     
@@ -355,11 +355,11 @@ In case the user is not calibrated, launch an intent to send the user into the c
 <details>
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iOS</summary>
     
-    To verify that a user is calibrated, call the SDK to check the status:
+To verify that a user is calibrated, call the SDK to check the status:
     
     func checkUserCalibrationStatus() async -> Result<UserCalibrationStatus, Error>
 
-The UserCalibrationStatus enum is defined as:
+The _UserCalibrationStatus_ enum is defined as:
 
     public enum UserCalibrationStatus: Int{
         case unknown = -100,
@@ -369,8 +369,8 @@ The UserCalibrationStatus enum is defined as:
              modelsAvailable = 2
     }
 
-A user in the calibrationDone state has finished calibration and Arctop's servers are processing their models.
-This usually takes around 5 minutes and then the user is ready to proceed with live streaming. You cannot start a session for a user that is not in the *modelsAvailable* status.
+A user in the _calibrationDone_ state has finished calibration and Arctop's servers are processing their models.
+This usually takes around 5 minutes and then the user is ready to proceed with live streaming. You cannot start a session for a user that is not in the _modelsAvailable_ status.
 </details>
 
 #### 3. Connect to an Arctop Sensor Device 
@@ -379,7 +379,7 @@ This usually takes around 5 minutes and then the user is ready to proceed with l
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
     
 Connecting to an Arctop sensor device, for example a headband, is accomplished by calling **connectSensorDevice(String macAddress)**. 
-Available in the SDK is the PairingActivity class, which handles scanning and extracting the device's MAC address using builtin CompanionDeviceManager. You can launch the activity using the following code
+Available in the SDK is the _PairingActivity_ class, which handles scanning and extracting the device's MAC address using builtin CompanionDeviceManager. You can launch the activity using the following code:
         
         Intent activityIntent = new Intent(ArctopSDK.ARCTOP_PAIR_DEVICE);
     
@@ -407,8 +407,8 @@ Before launching the activity you will need to register for the broadcast.
     
 The call to **connectSensorDevice(String macAddress)** will initiate a series of callbacks to **onConnectionChanged(int previousConnection ,int currentConnection)**
     
-The values for _previousConnection_ and _currentConnection_ are defined in the ArctopSDK.java class.
-Once the value of _currentConnection_ == ArctopSDK.ConnectionState.CONNECTED , you may begin a session. 
+The values for _previousConnection_ and _currentConnection_ are defined in the _ArctopSDK.java_ class.
+Once the value of _currentConnection == ArctopSDK.ConnectionState.CONNECTED_, you may begin a session. 
 </details>
 
 <details>
@@ -461,20 +461,20 @@ Add properties for the screen to verify:
         activityIntent.putExtra(ArctopQAProperties.TASK_PROPERTIES ,
                     new ArctopQAProperties(ArctopQAProperties.Quality.Good , ArctopQAProperties.INFINITE_TIMEOUT));
     
-The [ArctopQAProperties](arctopSDK/src/main/java/io/arctop/ArctopQAProperties.kt) class contains further explanation on different settings you can use to define your user's QA experience.
+The [_ArctopQAProperties_](https://github.com/arctop/android-sdk/blob/25fdc767f6f9ca0b1f5d33a6515bc7f954267566/arctopSDK/src/main/java/com/arctop/ArctopQAProperties.kt) class contains further explanation on different settings you can use to define your user's QA experience.
     
 Optionally, you can add a flag to run the screen in debug mode. This is helpful when developing your apps. 
 It provides 2 features that aren't available in a release setting:
 
 1. There will be a "Continue" button at the bottom of the screen, allowing you to simulate successful QA.
-2. Once you dismiss the "Please unplug your device." dialog, it will not show up again, and you can continue working with the device connected.
+2. Once you dismiss the "Please unplug your device" dialog, it will not show up again, and you can continue working with the device connected.
     
-    Adding the flag is done as follows:
+Adding the flag is done as follows:
     
         activityIntent.putExtra(ArctopQAProperties.RUN_IN_DEBUG , true);
        
                     
-    The activity will call finish() with either RESULT_OK or RESULT_CANCELED, which you can use to determine your next steps.
+The activity will call finish() with either RESULT_OK or RESULT_CANCELED, which you can use to determine your next steps.
 </details>
 
 <details>
@@ -500,14 +500,14 @@ You should also verify that the user DOES NOT have their device plugged in and c
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
     
 For a calibrated user, call **startPredictionSession(String predictionName)** to begin running the Arctop real-time prediction service.
-You can find the predictions in **ArctopSDK.Predictions**
+You can find the predictions in **ArctopSDK.Predictions**.
 </details>
 
 <details>
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iOS</summary>
     
 For a calibrated user, call **func startPredictionSession(_ predictionName: String) async -> Result<Bool, Error>** to begin running the Arctop real-time prediction SDK.
-You can find the prediction names in **ArctopSDKPredictions**
+You can find the prediction names in **ArctopSDKPredictions**.
 </details>
 
 #### 6. Work with Session Data
@@ -516,7 +516,7 @@ At this point, your app will receive results via the **onValueChanged(String key
 
 Results are given in the form of values from 0-100 for focus, enjoyment, and stress. The neutral point for each user is at 50, meaning that values above 50 reflect high levels of the measured quantity. For example, a 76 in focus is a high level of focus, while a 99 is nearly the highest focus that can be achieved. Values below 50 represent the opposite, meaning lack of focus or lack of enjoyment or lack of stress. For example, a 32 in focus is a lower level that reflects the user may not be paying much attention, while a 12 in enjoyment can mean the user dislikes the current experience. A value of 23 in stress means that the user is relatively calm. 
 
-Focus and enjoyment are derived exclusively from brain data, while Stress is derived from heart rate variability (HRV) data. The relationship between stress outputs (between 0 and 100) and heart rate variability data can be described by an inverted logistic function, in which the stress value of 50 corresponds to an HRV of 60ms. 
+Focus and enjoyment are derived exclusively from brain data, while stress is derived from heart rate variability (HRV) data. The relationship between stress outputs (between 0 and 100) and heart rate variability data can be described by an inverted logistic function, in which the stress value of 50 corresponds to an HRV of 60ms. 
 
 Eye blink data is derived from brain data and recorded as a binary. The presence of a blink will be indicated by a value of 1 in that column. Blink data for each individual eye will be provided in a future version.
 Sleep onset is also indicated by binary values of 0 or 1 under "sleep detection". This information tells whether a user is detected to be asleep or awake at each timestamp, with the awake state indicated by a 0 and asleep state indicated by a 1. Additional sleep metrics will be provided in a future version. 
@@ -526,7 +526,7 @@ Excessively noisy data that cannot be decoded accurately in Arctop’s SDK is re
 <details>
     <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Android</summary>
     
-Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback. If QA failed during the analysis window, the **passed** parameter will be false, and the type of failure will be reported in **type**. Valid types are defined in **QAFailureType** class inside [ArctopSDK.java](arctopSDK/src/main/java/io/arctop/ArctopSDK.java).
+Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback. If QA failed during the analysis window, the **passed** parameter will be false, and the type of failure will be reported in **type**. Valid types are defined in **QAFailureType** class inside [ArctopSDK.java](https://github.com/arctop/android-sdk/blob/25fdc767f6f9ca0b1f5d33a6515bc7f954267566/arctopSDK/src/main/java/com/arctop/ArctopSDK.java).
 </details>
 
 <details>
