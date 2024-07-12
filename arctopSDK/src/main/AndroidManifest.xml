@@ -4,4 +4,7 @@
     <application>
         <meta-data android:name="io.sentry.dsn" android:value="https://cfdac1d211074bbc988ef0ecf7c6b66b@o380226.ingest.sentry.io/5205822" />
     </application>
+    <queries>
+        <package android:name="com.arctop.app" />
+    </queries>
 </manifest>
