@@ -1,7 +1,6 @@
 package com.arctop.unity;
 
 public interface IArctopSdkCallback {
-    void IsUserLoggedInCallback(boolean loggedIn);
     void ScanResultCallback(String device);
     // delegate for connection status
     void ConnectionStatusCallback(int previous, int current);
@@ -11,4 +10,6 @@ public interface IArctopSdkCallback {
     void QAStatusCallback(Boolean passed, int errorCode);
     // delegate for signalQuality
     void SignalQualityCallback(String signalQuality);
+    // TODO: Why isn't this on the iOS side?
+    void SessionCompleteCallback();
 }
