@@ -39,17 +39,15 @@ interface IArctopSdk {
     /**
     * Requests a marker to be written into the current session's data files
     * Markers will be written with current timestamp
-    * @param markerId numerical identifier of marker
     * @param line extra data line, can be plain text or JSON encoded values
     */
-    void writeMarker(in int markerId , in String line);
+    void writeUserMarker(in String line);
     /**
     * Requests a marker to be written into the current session's data files with a specified timestamp
-    * @param markerId numerical identifier of marker
     * @param line extra data line, can be plain text or JSON encoded values
     * @param timeStamp unix time stamp in MS to use for marker
     */
-    void writeTimedMarker(in int markerId , in String line , in long timeStamp);
+    void writeUserTimedMarker(in String line , in long timeStamp);
     /**
     * Registers for SDK callbacks
     * @param listener IArctopSdkListener implementation
