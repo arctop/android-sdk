@@ -71,4 +71,5 @@ interface IArctopSdk {
     */
     oneway void disconnectSensorDevice();
 
+    oneway void scanForDevices();
 }

@@ -38,4 +38,9 @@ oneway interface IArctopSdkListener {
     * @param message extra data on the error
     */
     void onError(in int errorCode ,in String message);
+    /**
+    *
+    */
+    void onDeviceList(in Map deviceList);
+    void onSignalQuality(in String quality);
 }
