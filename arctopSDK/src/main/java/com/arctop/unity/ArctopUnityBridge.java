@@ -8,20 +8,18 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
-import android.os.Debug;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-
-import com.arctop.ArctopSDK;
 import com.arctop.IArctopSdk;
 import com.arctop.IArctopSdkListener;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
+/**
+ * Unity bridge. Entry point for C# -> Java communication between service and Unity3D
+ * */
 public class ArctopUnityBridge extends IArctopSdkListener.Stub {
     private final String TAG = "Arctop-Unity-Bridge";
     private IArctopSdk mService = null;
@@ -107,9 +105,9 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
         }
     };
 
-    public int InitializeSdk(String apiKey, String bundleId){
-        Log.d(TAG, "InitializeSdk: " + bundleId + " " + apiKey);
+    public int arctopSDKInit(String apiKey, String bundleId){
         try {
+            //TODO: Should we null out service and listeners?
             return mService.initializeArctop(apiKey);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -118,7 +116,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     public void arctopSDKShutdown()
     {
-        Log.d(TAG, "arctopSDKShutdown");
         try {
             mService.shutdownSdk();
         } catch (RemoteException e) {
@@ -130,12 +127,8 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
     public int arctopSDKIsUserLoggedIn()
     {
         try {
-            Log.d(TAG, "arctopSDKIsUserLoggedIn - checking");
-            int response = mService.getUserLoginStatus();
-            Log.d(TAG, "arctopSDKIsUserLoggedIn: Checked native : " + response);
-            return response;
+            return mService.getUserLoginStatus();
         } catch (RemoteException e) {
-            Log.e(TAG, "arctopSDKIsUserLoggedIn: ", e );
             throw new RuntimeException(e);
         }
     }
@@ -154,7 +147,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
     public void arctopSDKScanForDevices()
     {
         try {
-            Log.d(TAG, "arctopSDKScanForDevices: starting scan");
             mService.scanForDevices();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -164,10 +156,8 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     public void arctopSDKConnectToDeviceId(String deviceId)
     {
-        Log.d(TAG, "arctopSDKConnectToDeviceId: " + deviceId);
         Object macAddress = m_devicesMap.get(deviceId);
         if (macAddress != null) {
-            Log.d(TAG, "arctopSDKConnectToDeviceId: " + macAddress);
             try {
                 mService.connectSensorDevice(macAddress.toString());
             } catch (RemoteException e) {
@@ -182,7 +172,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     public void arctopSDKDisconnectDevice()
     {
-        Log.d(TAG, "arctopSDKDisconnectDevice");
         try {
             mService.disconnectSensorDevice();
         } catch (RemoteException e) {
@@ -193,11 +182,8 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     public int arctopSDKStartPredictions(String predictionName)
     {
-        Log.d(TAG, "arctopSDKStartPredictions: " + predictionName);
         try {
-            int response = mService.startPredictionSession(predictionName);
-            Log.d(TAG, "arctopSDKStartPredictions: " + response);
-            return response;
+            return mService.startPredictionSession(predictionName);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -206,7 +192,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     public int arctopSDKEndPrediction()
     {
-        Log.d(TAG, "arctopSDKEndPrediction");
         try {
             return mService.finishSession();
         } catch (RemoteException e) {
@@ -217,7 +202,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     public void arctopSDKWriteUserMarker(String markerData)
     {
-        Log.d(TAG, "arctopSDKWriteUserMarker " + markerData);
         try {
             mService.writeUserMarker(markerData);
         } catch (RemoteException e) {
@@ -227,7 +211,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     @Override
     public void onConnectionChanged(int previousConnection, int currentConnection) throws RemoteException {
-        Log.d(TAG, "onConnectionChanged: p:" + previousConnection + " c:" + currentConnection);
         if (mSdkCallback!=null) {
             mSdkCallback.ConnectionStatusCallback(previousConnection, currentConnection);
         }
@@ -235,7 +218,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     @Override
     public void onValueChanged(String key, float value) throws RemoteException {
-        Log.d(TAG, "onValueChanged: key:" + key + " value:" + value);
         if (mSdkCallback!=null) {
             mSdkCallback.ValueChangedCallback(key, value);
         }
@@ -243,7 +225,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     @Override
     public void onQAStatus(boolean passed, int type) throws RemoteException {
-        Log.d(TAG, "onQAStatus: passed:" + passed + " type:" + type);
         if (mSdkCallback!=null) {
             mSdkCallback.QAStatusCallback(passed,type);
         }
@@ -251,7 +232,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     @Override
     public void onSessionComplete() throws RemoteException {
-        Log.d(TAG, "onSessionComplete: ");
         if (mSdkCallback!=null) {
             mSdkCallback.SessionCompleteCallback();
         }
@@ -265,12 +245,10 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     @Override
     public void onDeviceList(Map deviceList) throws RemoteException {
-        Log.d(TAG, "onDeviceList: got list" + deviceList);
         m_devicesMap = deviceList;
         if (mSdkCallback!=null) {
             for (Object item: deviceList.keySet()
                  ) {
-                Log.d(TAG, "onDeviceList: " + item.toString());
                 mSdkCallback.ScanResultCallback(item.toString());
             }
         }
@@ -278,7 +256,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     @Override
     public void onSignalQuality(String quality) throws RemoteException {
-        //Log.d(TAG, "onSignalQuality: " + quality);
         if (mSdkCallback!=null) {
             mSdkCallback.SignalQualityCallback(quality);
         }

@@ -70,6 +70,9 @@ interface IArctopSdk {
     * connection status is reported back via {@link IArctopSdkListener#onConnectionChanged(int previousConnection ,int currentConnection)}
     */
     oneway void disconnectSensorDevice();
-
+    /**
+    * Starts a scan for headwear devices.
+    * Device list is reported back via {@link IArctopSdkListener#onDeviceList(in Map deviceList)}
+    */
     oneway void scanForDevices();
 }

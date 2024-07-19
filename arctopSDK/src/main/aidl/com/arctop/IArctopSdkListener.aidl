@@ -39,8 +39,20 @@ oneway interface IArctopSdkListener {
     */
     void onError(in int errorCode ,in String message);
     /**
-    *
+    * Reports the found devices from a scan
+    * @param Map deviceList - Hashmap<String,String> with device name / mac address
     */
     void onDeviceList(in Map deviceList);
+    /**
+    * Reports the signal quality values for each
+    * electrode on the headband.
+    * 0 - perfect quality
+    * 113 - no signal
+    * reports a string deliniated by commas, one per electrode
+    * 0 -> TP9
+    * 1 -> AF7
+    * 2 -> AF8
+    * 3 -> TP10
+    */
     void onSignalQuality(in String quality);
 }
