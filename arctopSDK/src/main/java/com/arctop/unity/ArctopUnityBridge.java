@@ -1,16 +1,27 @@
 package com.arctop.unity;
 
 import static android.content.Context.BIND_AUTO_CREATE;
+import static android.content.Context.RECEIVER_EXPORTED;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ComponentInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
+
+import com.arctop.ArctopSDK;
 import com.arctop.IArctopSdk;
 import com.arctop.IArctopSdkListener;
 import java.util.HashMap;
@@ -26,6 +37,8 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
     private Activity mUnityActivity;
     private IArctopSdkCallback mSdkCallback;
     private IArctopServiceBindCallback bindCallback;
+    private LoginResultReceiver mLoginResultReceiver;
+
 
     private Map m_devicesMap = new HashMap<>();
     // Called From C# to set the Activity Instance
@@ -122,7 +135,47 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
             throw new RuntimeException(e);
         }
     }
+    private Intent getExplicitIntent(Intent activityIntent){
+        List<ResolveInfo> matches = mUnityActivity.getPackageManager()
+        .queryIntentActivities(activityIntent, PackageManager.MATCH_ALL);
+        if (matches.isEmpty()){
+            return null;
+        }
+        Intent explicit = new Intent(activityIntent);
+        ActivityInfo activityInfo = matches.get(0).activityInfo;
+        ComponentName cn = new ComponentName(activityInfo.applicationInfo.packageName
+                ,activityInfo.name);
+        explicit.setComponent(cn);
+        return explicit;
+    }
 
+    private class LoginResultReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mUnityActivity.unregisterReceiver(mLoginResultReceiver);
+            // TODO: We don't really have a fail here.
+            // TODO: If you fail it's handled in the other activity.
+            mLoginCallback.onSuccess();
+            mLoginCallback = null;
+        }
+    }
+    private IArctopSdkSuccessOrFailureCallback mLoginCallback;
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    public void arctopLaunchLogin(IArctopSdkSuccessOrFailureCallback callback){
+        Intent activityIntent = getExplicitIntent(new Intent(ArctopSDK.ARCTOP_LOGIN));
+        mLoginCallback = callback;
+        mLoginResultReceiver = new LoginResultReceiver();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mUnityActivity.registerReceiver(mLoginResultReceiver ,
+                    new IntentFilter(ArctopSDK.ARCTOP_LOGIN_RESULT), RECEIVER_EXPORTED);
+        }
+        else{
+            mUnityActivity.registerReceiver(mLoginResultReceiver ,
+                    new IntentFilter(ArctopSDK.ARCTOP_LOGIN_RESULT));
+        }
+
+        mUnityActivity.startActivity(activityIntent);
+    }
 
     public int arctopSDKIsUserLoggedIn()
     {

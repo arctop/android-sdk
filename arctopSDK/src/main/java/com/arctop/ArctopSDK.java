@@ -125,4 +125,6 @@ public final class ArctopSDK {
     public static final int SELECT_DEVICE_REQUEST_CODE = 66;
     public static final String DEVICE_ADDRESS_EXTRA = "deviceAddress";
     public static final String DEVICE_NAME_EXTRA = "deviceName";
+
+    public static final String ARCTOP_LOGIN_RESULT = "com.arctop.arctop-login-result";
 }
