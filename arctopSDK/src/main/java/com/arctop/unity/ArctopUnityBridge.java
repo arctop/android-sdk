@@ -117,7 +117,7 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
         }
     };
 
-    public int arctopSDKInit(String apiKey, String bundleId){
+    public int arctopSDKInit(String apiKey){
         try {
             return mService.initializeArctop(apiKey);
         } catch (RemoteException e) {
