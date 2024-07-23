@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
-import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
@@ -36,16 +35,16 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
     private IArctopSdk mService = null;
     private Activity mUnityActivity;
     private IArctopSdkCallback mSdkCallback;
-    private IArctopServiceBindCallback bindCallback;
+    private IArctopServiceBindCallback mBindCallback;
     private LoginResultReceiver mLoginResultReceiver;
 
 
-    private Map m_devicesMap = new HashMap<>();
+    private Map<Object, Object> m_devicesMap = new HashMap<>();
     // Called From C# to set the Activity Instance
     // This needs to be called after the C# side has requested the proper SDK permissions.
     public void setUnityActivity(Activity activity, IArctopServiceBindCallback callback) {
         mUnityActivity = activity;
-        bindCallback = callback;
+        mBindCallback = callback;
         doBindService();
     }
 
@@ -62,16 +61,16 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
                     .queryIntentServices(serviceIntent, 0);
             if (matches.isEmpty()) {
                 Log.d(TAG, "Cannot find a matching service!");
-                if (bindCallback != null){
-                    bindCallback.onFailure(IArctopServiceBindCallback.BindError.ServiceNotFound);
+                if (mBindCallback != null){
+                    mBindCallback.onFailure(IArctopServiceBindCallback.BindError.ServiceNotFound);
                 }
             }
             else if (matches.size() > 1) {
                 // This is really just a sanity check
                 // and should never occur in a real life scenario
                 Log.d(TAG, "Found multiple matching services!");
-                if (bindCallback != null){
-                    bindCallback.onFailure(IArctopServiceBindCallback.BindError.MultipleServicesFound);
+                if (mBindCallback != null){
+                    mBindCallback.onFailure(IArctopServiceBindCallback.BindError.MultipleServicesFound);
                 }
             }
             else {
@@ -87,8 +86,8 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
                 } else {
                     Log.d(TAG, "Failed to bind to Arctop Service");
                     // TODO: Verify this is the right error
-                    if (bindCallback != null){
-                        bindCallback.onFailure(IArctopServiceBindCallback.BindError.PermissionDenied);
+                    if (mBindCallback != null){
+                        mBindCallback.onFailure(IArctopServiceBindCallback.BindError.PermissionDenied);
                     }
                 }
             }
@@ -106,8 +105,8 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
-            if (bindCallback != null){
-                bindCallback.onSuccess();
+            if (mBindCallback != null){
+                mBindCallback.onSuccess();
             }
             Log.d(TAG, "Unity connected to service");
         }
@@ -120,7 +119,6 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
 
     public int arctopSDKInit(String apiKey, String bundleId){
         try {
-            //TODO: Should we null out service and listeners?
             return mService.initializeArctop(apiKey);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -131,6 +129,13 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
     {
         try {
             mService.shutdownSdk();
+            mService.unregisterSDKCallback(this);
+            mService = null;
+            mLoginCallback = null;
+            mSdkCallback = null;
+            mUnityActivity = null;
+            mBindCallback = null;
+
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

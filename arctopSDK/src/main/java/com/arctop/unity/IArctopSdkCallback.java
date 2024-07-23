@@ -13,6 +13,6 @@ public interface IArctopSdkCallback {
     void QAStatusCallback(Boolean passed, int errorCode);
     // delegate for signalQuality
     void SignalQualityCallback(String signalQuality);
-    // TODO: Why isn't this on the iOS side?
+    // delegate for session complete
     void SessionCompleteCallback();
 }
