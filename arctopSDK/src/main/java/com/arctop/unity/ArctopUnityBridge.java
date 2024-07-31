@@ -318,4 +318,12 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
             mSdkCallback.SignalQualityCallback(quality);
         }
     }
+
+    public String arctopSDKGetUserSessionId(){
+        try {
+            return mService.getUserSessionId();
+        } catch (RemoteException e) {
+            return "";
+        }
+    }
 }
