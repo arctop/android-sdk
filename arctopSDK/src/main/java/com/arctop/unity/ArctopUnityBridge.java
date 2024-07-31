@@ -326,4 +326,12 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
             return "";
         }
     }
+
+    public boolean arctopSDKGetUserModelExist(String predName){
+        try {
+            return mService.getUserModelExist(predName);
+        } catch (RemoteException e){
+            return false;
+        }   
+    }
 }

@@ -77,4 +77,6 @@ interface IArctopSdk {
     oneway void scanForDevices();
 
     String getUserSessionId();
+
+    boolean getUserModelExist(String predName);
 }
