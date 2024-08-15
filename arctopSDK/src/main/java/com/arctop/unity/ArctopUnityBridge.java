@@ -37,7 +37,7 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
     private IArctopSdkCallback mSdkCallback;
     private IArctopServiceBindCallback mBindCallback;
     private LoginResultReceiver mLoginResultReceiver;
-
+    private IArctopSdkSuccessOrFailureCallback mLoginCallback;
 
     private Map<Object, Object> m_devicesMap = new HashMap<>();
     // Called From C# to set the Activity Instance
@@ -164,7 +164,7 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
             mLoginCallback = null;
         }
     }
-    private IArctopSdkSuccessOrFailureCallback mLoginCallback;
+
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     public void arctopLaunchLogin(IArctopSdkSuccessOrFailureCallback callback){
         Intent activityIntent = getExplicitIntent(new Intent(ArctopSDK.ARCTOP_LOGIN));
@@ -186,6 +186,14 @@ public class ArctopUnityBridge extends IArctopSdkListener.Stub {
     {
         try {
             return mService.getUserLoginStatus();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int arctopSDKLogoutUser(){
+        try {
+            return mService.logoutUser();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

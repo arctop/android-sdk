@@ -75,4 +75,6 @@ interface IArctopSdk {
     * Device list is reported back via {@link IArctopSdkListener#onDeviceList(in Map deviceList)}
     */
     oneway void scanForDevices();
+
+    int logoutUser();
 }
