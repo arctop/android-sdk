@@ -337,9 +337,3 @@ Call **shutdownSdk()** to have Arctop release all of its resources.
 #### Unbind from the service
 
 Once the SDK is shutdown, you can safely unbind from the service.
-
-# Using the SDK with a non Android Client
-
-Arctop™ provides a LAN webserver that allows non Android clients access to the SDK data. For more info see [Stream Server Docs](https://github.com/arctop/android-sdk/blob/main/Arctop-Stream.md).
-
-It is highly recomended to first read through this documentation to have a better understanding of the SDK before trying to work with the stream server.
