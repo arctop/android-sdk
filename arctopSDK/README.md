@@ -356,7 +356,7 @@ Sleep data is presented in binary values of 0 or 1 in the "Sleep Detection" colu
 
 Eye blink values are also recorded as a binary. The presence of a blink will be indicated by a value of 1 within the "...Blinks" CSV data file. Blink data for each individual eye will be provided in a future version.
 
-Within the "...Heart Rate" CSV file, heart rate data is provided in units of beats per minute and heart rate variability (HRV) data is provided in units of milliseconds. 
+Within the "...Heart Rate" CSV file, heart rate data is provided in units of beats per minute and heart rate variability (HRV) data is provided in units of milliseconds. Heart rate is currently capped at 120 beats per minute; values over this will be displayed as "120".
 
 Any tags added during a session will be provided with their timestamps corresponding to when the user initiated the tag creation. This data is displayed in the "...Tags" CSV file. This file will only be present if tags were added during the session.
 
