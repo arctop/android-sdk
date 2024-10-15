@@ -4,9 +4,9 @@ Arctop's SDK repository contains everything you need to connect your application
 
 ## Background
 
-Arctop is a software company that makes real-time cognition decoding technology. Arctop's software applies artificial intelligence to electric measurements of brain activity — translating people’s feelings, reactions, and intent — into actionable data that empower applications with new capabilities. Since its founding in 2016, Arctop has worked to develop a cross-platform SDK that provides noninvasive brain-computer interface capabilities. The SDK is being developed continuously and is the result of  deep R&D, such as [this peer-reviewed study](https://www.frontiersin.org/articles/10.3389/fncom.2021.760561/full) published in _Frontiers in Computational Neuroscience_ where Arctop's SDK was used in a personalized audio application.
+Arctop is a software company that makes real-time cognition decoding technology. Arctop's software applies artificial intelligence to electric measurements of brain activity, translating people’s feelings, reactions, and intent into actionable data that empower applications with new capabilities. Since its founding in 2016, Arctop has worked to develop a cross-platform SDK that provides noninvasive brain-computer interface capabilities. The SDK is being developed continuously and is the result of  deep R&D, such as [this peer-reviewed study](https://www.frontiersin.org/articles/10.3389/fncom.2021.760561/full) published in _Frontiers in Computational Neuroscience_ where Arctop's SDK was used in a personalized audio application.
 
-The current version of the Arctop SDK provides three unique cognition data streams: focus, enjoyment, flow, and sleep state. It also provides body data streams including eye blinks, heart rate, and heart rate variability. All data streams are provided in real-time, meaning applications receive new data points several times per second. 
+The current version of the Arctop SDK provides four unique cognition data streams: focus, enjoyment, flow, and sleep state. It also provides body data streams including eye blinks, heart rate, and heart rate variability. All data streams are provided in real-time, meaning applications receive new data points several times per second. 
 
 In short, Arctop's SDK gives the ability to add new streams of personalized cognition data directly into applications.
 
@@ -71,7 +71,7 @@ The SDK contains the following components.
 
 ### Cleanup Phase
 
-1. [Shutdown the SDK](#1-shutdown-the-sdk)
+1. [Shut Down the SDK](#1-shut-down-the-sdk)
 2. [Unbind From the Service](#2-unbind-from-the-service)
 
 
@@ -247,7 +247,7 @@ Calibration takes approximately 10 minutes and only needs to be completed once p
 
 This process is important for Arctop’s software to learn individual users' unique patterns and tune its algorithms to be as accurate and robust as possible. 
 
-The best practices users should follow in completing calibration are listed below.
+The best practices users should follow when completing calibration are listed below.
 * Before starting the calibration session:
     * Go to a quiet place where you will not be interrupted for 10 minutes.
     * Unplug your headwear and mobile device from any chargers.
@@ -350,17 +350,17 @@ Users will also be provided with a post-session report and CSV files containing 
 
 Arctop's focus, enjoyment, flow, sleep, and eye blink metrics are derived exclusively from brain data, while heart rate and heart rate variability metrics are derived from body data. 
 
-Focus, enjoyment, and flow data is provided within the "...Cognition" CSV file. These values range from 0-100. The neutral point for each user is at 50, meaning that values above 50 reflect high levels of the measured quantity. For example, a 76 in focus is a high level of focus, while a 99 is nearly the highest focus that can be achieved. Values below 50 represent the opposite, meaning lack of focus or lack of enjoyment or lack of flow. For example, a 32 in focus is a lower level that reflects the user may not be paying much attention, while a 12 in enjoyment can mean the user dislikes the current experience. A value of 23 in flow means that the user is not in a high flow state. 
+Focus, enjoyment, and flow data is provided within the "...Cognition" CSV file. These values range from 0-100. The neutral point for each user is at 50, meaning that values above 50 reflect high levels of the measured quantity. For example, a 76 in focus is a high level of focus, while a 99 is nearly the highest focus that can be achieved. Values below 50 represent the opposite, meaning lack of focus or lack of enjoyment or lack of flow. For example, a 32 in focus is a lower level that reflects the user may not be paying much attention, while a 12 in enjoyment can mean the user dislikes the current experience. A value of 23 in flow indicates that the user is not in a high flow state. 
 
-Sleep data is presented in binary values of 0 or 1 in the "Sleep Detection" column of the provided CSV data file ("...Sleep"). This information tells whether a user is detected to be asleep or awake at each timestamp, with the awake state indicated by a 0 and asleep state indicated by a 1. Additional sleep metrics will be provided in a future version. If sleep onset (0->1) is detected during a session, an automatic tag will be added at that timestamp ("Sleep Onset"). Focus, enjoyment, flow, and blink metrics are not yet validated during the asleep-state, so will be displayed as NaN until the awake state is detected. At the timestamp of this transition (1->0), another automatic tag will be added ("Wake Up") and metrics previously disabled will resume streaming. No report will be generated for sleep sessions at this time. 
+Sleep data is presented in binary values of 0 or 1 in the "Sleep Detection" column of the provided CSV data file ("...Sleep"). This information tells whether a user is detected to be asleep or awake at each timestamp, with the awake state indicated by a 0 and asleep state indicated by a 1. Focus, enjoyment, flow, and blink metrics are currently unavailable during sleep sessions. No report will be generated for sleep sessions at this time. Additional sleep metrics will be provided in a future version.
 
 Eye blink values are also recorded as a binary. The presence of a blink will be indicated by a value of 1 within the "...Blinks" CSV data file. Blink data for each individual eye will be provided in a future version.
 
-Within the "...Heart Rate" CSV file, heart rate data is provided in units of beats per minute and heart rate variability data is provided in units of milliseconds. 
+Within the "...Heart Rate" CSV file, heart rate data is provided in units of beats per minute and heart rate variability (HRV) data is provided in units of milliseconds. 
 
 Any tags added during a session will be provided with their timestamps corresponding to when the user initiated the tag creation. This data is displayed in the "...Tags" CSV file. This file will only be present if tags were added during the session.
 
-Excessively noisy data that cannot be decoded accurately in Arctop’s SDK is represented as NaN. Values of NaNs should be ignored as these reflect low confidence periods of analysis. This can occur for many reasons, such as a lapse in sensor connection to the skin. If you notice an excess of NaNs in your data, please contact Arctop for support as these values typically only occur on a limited basis.
+Excessively noisy data that cannot be decoded accurately in Arctop’s SDK is represented as either -1 or NaN. These values should be ignored as they reflect low confidence periods of analysis. This can occur for many reasons, such as a lapse in sensor connection to the skin. If you notice an excess of -1 or NaN values in your data, please contact Arctop for support as these values typically only occur on a limited basis.
     
 Signal QA is reported via **onQAStatus(boolean passed ,int type)** callback. If QA failed during the analysis window, the **passed** parameter will be false, and the type of failure will be reported in **type**. Valid types are defined in **QAFailureType** class inside [ArctopSDK.java](https://github.com/arctop/android-sdk/blob/25fdc767f6f9ca0b1f5d33a6515bc7f954267566/arctopSDK/src/main/java/com/arctop/ArctopSDK.java).
 
@@ -371,10 +371,17 @@ You can use the **IArctopSessionUploadListener** interface to monitor the progre
 
 ### Cleanup Phase
 
-#### 1. Shutdown the SDK
+#### 1. Shut Down the SDK
     
 Call **shutdownSdk()** to have Arctop release all of its resources.
 
 #### 2. Unbind From the Service
     
-Once the SDK is shutdown, you can safely unbind from the service.
+Once the SDK is shut down, you can safely unbind from the service.
+
+## Using the SDK Outside of Android and iOS
+
+Arctop™ provides a LAN webserver that allows non-Android, non-iOS clients access to the SDK data. For more info see [Stream Server Docs](https://github.com/arctop/android-sdk/blob/main/Arctop-Stream.md).
+
+It is highly recommended to first read through this documentation to have a better understanding of the SDK before trying to work with the stream server.
+
